@@ -35,9 +35,11 @@ while continuer:
 		if event.type == QUIT:
 			continuer = 0
 		if event.type == KEYDOWN:
+			# pygame.key.set_repeat(400, 30)
 			if event.key == K_DOWN:	#Si "flèche bas"
 				#On descend le perso
 				position_perso = position_perso.move(0,3)
+				# pygame.key.set_repeat(400, 30) pour répter l'action quand la touche reste enfoncé.
 			if event.key == K_UP:
 				position_perso = position_perso.move(0,-3)
 			if event.key == K_LEFT:

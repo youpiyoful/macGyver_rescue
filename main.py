@@ -39,16 +39,16 @@ while continuer:
 			if event.key == K_DOWN:	#Si "flèche bas"
 				#On descend le perso
 				position_perso = position_perso.move(0,3)
-				# pygame.key.set_repeat(400, 30) pour répter l'action quand la touche reste enfoncé.
+				# pygame.key.set_repeat(400, 30) pour répéter l'action quand la touche reste enfoncé.
 			if event.key == K_UP:
 				position_perso = position_perso.move(0,-3)
 			if event.key == K_LEFT:
 				position_perso = position_perso.move(-3,0)
 			if event.key == K_RIGHT:
 				position_perso = position_perso.move(3,0)
-	
+
 	#Re-sticking
-	window.blit(background, (0,0))	
+	window.blit(background, (0,0))
 	window.blit(perso, position_perso)
 	#Refresh
 	pygame.display.flip()

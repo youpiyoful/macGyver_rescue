@@ -7,9 +7,9 @@ class Config():
     """
     Contain all the constants variables
     """
-    SPRITES_NUMBER = 15
+    SPRITES_NUMBER = 20*19
     SPRITE_SIZE = 30
-    FILE = "map"
+    FILE = "map.txt"
     ITEMS = [{"item": "NEEDLE", "image": "images/needle.png", "map": "N"},
              {"item": "ETHER", "image": "images/ether.png", "map": "E"},
              {"item": "TUBE", "image": "images/tube.png", "map": "T"}]

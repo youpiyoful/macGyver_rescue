@@ -9,7 +9,7 @@ class Config():
     """
     SPRITES_NUMBER = 15*15
     SPRITE_SIZE = 30
-    FILE = "map.txt"
+    FILE = "map"
     ITEMS = [{"item": "NEEDLE", "image": "images/needle.png", "map": "N"},
              {"item": "ETHER", "image": "images/ether.png", "map": "E"},
              {"item": "TUBE", "image": "images/tube.png", "map": "T"}]

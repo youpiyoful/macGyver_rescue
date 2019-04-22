@@ -1,15 +1,9 @@
-
-class Display:
-    pass
-
-class Game:
-    pass
-
-class Maze:
-    pass
-
 class Level:
-    pass
+    def __init__(self):
+        pass
 
 class Perso:
-    pass
+    def __init__(self):
+        pass
+    def moove():
+        pass

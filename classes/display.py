@@ -21,7 +21,7 @@ class Display:
         """
         Window Generation
         """
-        pygame.display.set_caption("OpenClassrooms P3 McGyver !")
+        pygame.display.set_caption("McGyver Rescue !")
         return pygame.display.set_mode((self.height, self.width))
 
     @staticmethod

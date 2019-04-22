@@ -1,13 +1,13 @@
 """
-@desc only contain Constants Classe
+@desc only config Constants Classe
 """
 
 
 class Config():
     """
-    Contain all the constants variables
+    Contain all the config variables
     """
-    SPRITES_NUMBER = 20*19
+    SPRITES_NUMBER = 15*15
     SPRITE_SIZE = 30
     FILE = "map.txt"
     ITEMS = [{"item": "NEEDLE", "image": "images/needle.png", "map": "N"},

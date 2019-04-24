@@ -10,7 +10,7 @@ Fichiers : main.py, classes.py, config.py, n1, n2 + images
 import pygame
 from pygame.locals import *
 from classes import *
-from config import Config
+from config import *
 
 pygame.init()
 
@@ -24,7 +24,7 @@ pygame.init()
 # 	def stickBackground(self, background):
 
 #Open window Pygame
-window = pygame.display.set_mode((size, size))
+window = pygame.display.set_mode((WINDOW_SIDE, WINDOW_SIDE))
 
 #Load background
 # background = pygame.image.load("background.jpg").convert()
@@ -36,11 +36,11 @@ window = pygame.display.set_mode((size, size))
 # window.blit(perso, position_perso)
 
 #Icon
-icon = pygame.image.load(image_icon)
+icon = pygame.image.load(ICON_IMAGE)
 pygame.display.set_icon(icon)
 
 #Title
-pygame.display.set_caption(window_title)
+pygame.display.set_caption(WINDOW_TITLE)
 
 
 #Screen refresh
@@ -51,7 +51,7 @@ start = 1
 
 while start:
     #Loading and display of home screen
-    home = pygame.image.load(home_image).convert()
+    home = pygame.image.load(HOME).convert()
     window.blit(home, (0,0))
 
     #refresh
@@ -88,7 +88,7 @@ while start:
                     home_continue = 0
                     choice = 'l2'
 
-#Verification than user have make a choice choice for don't load if he leaves
+#Verification than user have make a choice for don't load if he leaves
 if choice != 0:
     #Loading background
     background = pygame.image.load(background_image).convert()
@@ -99,7 +99,7 @@ if choice != 0:
     level.display(window)
 
     #Creation of mc Gyver
-    mc_giver = Perso("images/mc_gyver.jpg", level)
+    mc_giver = Perso(CHARACTER, level)
 
 #Looping of game_continue
 while game_continue:

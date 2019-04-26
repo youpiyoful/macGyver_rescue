@@ -35,8 +35,8 @@ class Level:
 	def display(self, window):
 		"""Méthod for display level by list of structure output by generate()"""
 		#Loading images
-		mur = pygame.image.load(WALL).convert()
-		# depart = pygame.image.load(image_depart).convert()
+		wall = pygame.image.load(WALL).convert()
+		# start = pygame.image.load(image_depart).convert()
 		# arrivee = pygame.image.load(image_arrivee).convert_alpha()
 
 		#we run the list of level
@@ -44,77 +44,72 @@ class Level:
 		for line in self.structure:
 			#we run the listes of lines
 			case_num = 0
-			for sprite in ligne:
-				#On calcule la position réelle en pixels
-				x = num_case * taille_sprite
-				y = num_ligne * taille_sprite
-				if sprite == 'm':		   #m = Mur
-					fenetre.blit(mur, (x,y))
-				elif sprite == 'd':		   #d = Départ
-					fenetre.blit(depart, (x,y))
+			for sprite in line:
+				#we calcul real position in pixels
+				x = case_num * SPRITE_SIZE
+				y = line_num * SPRITE_SIZE
+				if sprite == 'w':		   #w = Wall
+					fenetre.blit(wall, (x,y))
+				elif sprite == 's':		   #s = Start
+					fenetre.blit(start, (x,y))
 				elif sprite == 'a':		   #a = Arrivée
 					fenetre.blit(arrivee, (x,y))
-				num_case += 1
-			num_ligne += 1
+				case_num += 1
+			line_num += 1
 
 
 
 
 class Perso:
-	"""Classe permettant de créer un personnage"""
-	def __init__(self, droite, gauche, haut, bas, niveau):
-		#Sprites du personnage
-		self.droite = pygame.image.load(droite).convert_alpha()
-		self.gauche = pygame.image.load(gauche).convert_alpha()
-		self.haut = pygame.image.load(haut).convert_alpha()
-		self.bas = pygame.image.load(bas).convert_alpha()
-		#Position du personnage en cases et en pixels
-		self.case_x = 0
-		self.case_y = 0
+	"""Class for create character"""
+	def __init__(self, character, level):
+		#Sprites of character
+		self.character = pygame.image.load(CHARACTER).convert_alpha()
+
+		#Position of character in cases and in pixels
+		self.sprite_x = 0
+		self.sprite_y = 0
 		self.x = 0
 		self.y = 0
-		#Direction par défaut
-		self.direction = self.droite
-		#Niveau dans lequel le personnage se trouve
-		self.niveau = niveau
+
+		#level dans lequel le personnage se trouve
+		self.level = level
 
 
-	def deplacer(self, direction):
-		"""Methode permettant de déplacer le personnage"""
+	def moove(self, direction):
+		"""Method for moove the character"""
 
-		#Déplacement vers la droite
-		if direction == 'droite':
-			#Pour ne pas dépasser l'écran
-			if self.case_x < (nombre_sprite_cote - 1):
-				#On vérifie que la case de destination n'est pas un mur
-				if self.niveau.structure[self.case_y][self.case_x+1] != 'm':
-					#Déplacement d'une case
-					self.case_x += 1
-					#Calcul de la position "réelle" en pixel
-					self.x = self.case_x * taille_sprite
-			#Image dans la bonne direction
-			self.direction = self.droite
+		#Moove right
+		if direction == 'right':
+			#For dont out of screen
+			if self.sprite_x < (number_sprites_side - 1):
+				#We verify than case is not a wall
+				if self.level.structure[self.sprite_y][self.sprite_x+1] != 'w':
+					#Moove 1 case
+					self.sprite_x += 1
+					#Calcul of position "real" in pixel
+					self.x = self.sprite_x * SPRITE_SIZE
 
-		#Déplacement vers la gauche
-		if direction == 'gauche':
-			if self.case_x > 0:
-				if self.niveau.structure[self.case_y][self.case_x-1] != 'm':
-					self.case_x -= 1
-					self.x = self.case_x * taille_sprite
-			self.direction = self.gauche
+		#Moove left
+		if direction == 'left':
+			if self.sprite_x > 0:
+				if self.level.structure[self.sprite_y][self.sprite_x-1] != 'w':
+					self.sprite_x -= 1
+					self.x = self.sprite_x * SPRITE_SIZE
+			# self.direction = self.left
 
-		#Déplacement vers le haut
-		if direction == 'haut':
-			if self.case_y > 0:
-				if self.niveau.structure[self.case_y-1][self.case_x] != 'm':
-					self.case_y -= 1
-					self.y = self.case_y * taille_sprite
-			self.direction = self.haut
+		#Moove up
+		if direction == 'up':
+			if self.sprite_y > 0:
+				if self.level.structure[self.sprite_y-1][self.sprite_x] != 'w':
+					self.sprite_y -= 1
+					self.y = self.sprite_y * SPRITE_SIZE
+			# self.direction = self.up
 
-		#Déplacement vers le bas
-		if direction == 'bas':
-			if self.case_y < (nombre_sprite_cote - 1):
-				if self.niveau.structure[self.case_y+1][self.case_x] != 'm':
-					self.case_y += 1
-					self.y = self.case_y * taille_sprite
-			self.direction = self.bas
+		#Moove down
+		if direction == 'down':
+			if self.sprite_y < (nombre_sprite_cote - 1):
+				if self.level.structure[self.sprite_y+1][self.sprite_x] != 'w':
+					self.sprite_y += 1
+					self.y = self.sprite_y * SPRITE_SIZE
+			# self.direction = self.down

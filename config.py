@@ -13,7 +13,7 @@ WINDOW_SIDE = SPRITE_SIZE*SPRITES_NUMBER
 
 #Personnalization of window
 WINDOW_TITLE = "Mac gyver Rescue"
-ICON_IMAGE = "images/mc_gyver.png"
+ICON_IMAGE = "images/macgyver.png"
 
 #Map level
 l1 = "map1"

@@ -71,7 +71,7 @@ while start:
 
             #If user leave, we make variables to loop
             #at 0 for don't launch anything and exit
-            if event.type == LEAVE or event.type == KEYDOWN and event.key == K_ESCAPE:
+            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                 home_continue = 0
                 game_continue = 0
                 start = 0
@@ -140,7 +140,7 @@ while game_continue:
     #victory -> Comeback to home
     if level.structure[mc_giver.sprite_y][mc_giver.sprite_x] == 'a':
         game_continue = 0
-        
+
 
 
     while condition:

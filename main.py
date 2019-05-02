@@ -49,6 +49,7 @@ pygame.display.set_caption(WINDOW_TITLE)
 
 start = 1
 
+# PRINCIPAL LOOP
 while start:
     #Loading and display of home screen
     home = pygame.image.load(HOME).convert()
@@ -61,12 +62,13 @@ while start:
     game_continue = 1
     home_continue = 1
 
-    #LOOP FOR HOME
+    #MENU LOOP
     while home_continue:
 
         #Limit of loop speed
         pygame.time.Clock().tick(30)
-
+        
+        #GAME LOOP
         for event in pygame.event.get():
 
             #If user leave, we make variables to loop

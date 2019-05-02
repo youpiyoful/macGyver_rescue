@@ -20,9 +20,9 @@ l1 = "map1"
 l2 = "map2"
 
 #List of images
-ITEMS = [{"item": "NEEDLE", "image": "images/needle.png", "map": "N"},
-        {"item": "ETHER", "image": "images/ether.png", "map": "E"},
-        {"item": "TUBE", "image": "images/tube.png", "map": "T"}]
+# ITEMS = [{"item": "NEEDLE", "image": "images/needle.png", "map": "N"},
+#         {"item": "ETHER", "image": "images/ether.png", "map": "E"},
+#         {"item": "TUBE", "image": "images/tube.png", "map": "T"}]
 BACKGROUND = "images/background.jpg"
 CHARACTER = "images/macgyver.png"
 GUARD = "images/guard.png"

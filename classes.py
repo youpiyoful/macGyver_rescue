@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # -*- coding: Utf-8 -*
 """Classes du jeu de Labyrinthe Donkey Kong"""
 

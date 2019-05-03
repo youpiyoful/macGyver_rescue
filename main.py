@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # -*- coding: Utf-8 -*
 
 """
@@ -31,97 +30,97 @@ carry_on = 1
 
 while carry_on:	
     #Loading and display of home screen
-	home = pygame.image.load(HOME_IMAGE).convert()
-	window.blit(home, (0,0))
+    home = pygame.image.load(HOME_IMAGE).convert()
+    window.blit(home, (0,0))
 
     #refresh
-	pygame.display.flip()
+    pygame.display.flip()
 
     # we remake variables to 1 for each looping
-	carry_on_game = 1
-	carry_on_home = 1
+    carry_on_game = 1
+    carry_on_home = 1
 
     #MENU LOOP
-	while carry_on_home:
-	
+    while carry_on_home:
+    
         #Limit of loop speed
-		pygame.time.Clock().tick(30)
+        pygame.time.Clock().tick(30)
 
-		#GAME LOOP
-		for event in pygame.event.get():
-		
+        #GAME LOOP
+        for event in pygame.event.get():
+        
             #If user leave, we make variables to loop
             #at 0 for don't launch anything and exit
-			if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-				carry_on_home = 0
-				carry_on_game = 0
-				carry_on = 0
+            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+                carry_on_home = 0
+                carry_on_game = 0
+                carry_on = 0
                 #Variable for choice level
-				choice = 0
-				
-			elif event.type == KEYDOWN:				
+                choice = 0
+                
+            elif event.type == KEYDOWN:				
                 #Launch choice 1
-				if event.key == K_F1:
-					carry_on_home = 0	#Leave home
-					choice = 'l1'		#We init the choice to Launch
+                if event.key == K_F1:
+                    carry_on_home = 0	#Leave home
+                    choice = 'l1'		#We init the choice to Launch
                 # launch to choice 2
-				elif event.key == K_F2:
-					carry_on_home = 0
-					choice = 'l2'
-			
-		
-	#Verification than user have make a choice for don't load if he leaves
-	if choice != 0:
-    	#Loading background
-		fond = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
+                elif event.key == K_F2:
+                    carry_on_home = 0
+                    choice = 'l2'
+            
+        
+    #Verification than user have make a choice for don't load if he leaves
+    if choice != 0:
+        #Loading background
+        fond = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
 
-    	#Generate a choice from a FILE
-		level = Level(choice)
-		level.generate()
-		level.display(window)
+        #Generate a choice from a FILE
+        level = Level(choice)
+        level.generate()
+        level.display(window)
 
-    	#Creation of mc Gyver
-		mc = Character(IMAGE_CHARACTER, level)
+        #Creation of mc Gyver
+        mc = Character(IMAGE_CHARACTER, level)
 
-				
-	#GAME LOOP
-	while carry_on_game:
-	
-    	#Limit speed looping
-		pygame.time.Clock().tick(30)
-	
-		for event in pygame.event.get():
-		
-			#if user leave, we make the variable who continue the game quand
-			#the variable general at 0 for close the window
-			if event.type == QUIT:
-				carry_on_game = 0
-				carry_on = 0
-		
-			elif event.type == KEYDOWN:
-            	#if user push escape here, we comeback only at home
-				if event.key == K_ESCAPE:
-					carry_on_game = 0
-					
-            	#Keyboard of moove to mc_giver
-				elif event.key == K_RIGHT:
-					mc.moove('right')
-				elif event.key == K_LEFT:
-					mc.moove('left')
-				elif event.key == K_UP:
-					mc.moove('up')
-				elif event.key == K_DOWN:
-					mc.moove('down')			
-			
-    	#Displays at new positions
-		window.blit(fond, (0,0))
-		level.display(window)
-		window.blit(mc.direction, (mc.x, mc.y))
-		pygame.display.flip()
+                
+    #GAME LOOP
+    while carry_on_game:
+    
+        #Limit speed looping
+        pygame.time.Clock().tick(30)
+    
+        for event in pygame.event.get():
+        
+            #if user leave, we make the variable who continue the game quand
+            #the variable general at 0 for close the window
+            if event.type == QUIT:
+                carry_on_game = 0
+                carry_on = 0
+        
+            elif event.type == KEYDOWN:
+                #if user push escape here, we comeback only at home
+                if event.key == K_ESCAPE:
+                    carry_on_game = 0
+                    
+                #Keyboard of moove to mc_giver
+                elif event.key == K_RIGHT:
+                    mc.moove('right')
+                elif event.key == K_LEFT:
+                    mc.moove('left')
+                elif event.key == K_UP:
+                    mc.moove('up')
+                elif event.key == K_DOWN:
+                    mc.moove('down')			
+            
+        #Displays at new positions
+        window.blit(fond, (0,0))
+        level.display(window)
+        window.blit(mc.direction, (mc.x, mc.y))
+        pygame.display.flip()
 
-    	#Displays at new positions
-		if level.structure[mc.case_y][mc.case_x] == 'a':
-			carry_on_game = 0
+        #Displays at new positions
+        if level.structure[mc.case_y][mc.case_x] == 'a':
+            carry_on_game = 0
 
 ############### # IDEA:
 # mc_giver = 0

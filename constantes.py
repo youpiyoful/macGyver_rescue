@@ -1,17 +1,16 @@
-#!/usr/bin/python3
 # -*- coding: Utf-8 -*
-"""Constantes du jeu d'escape mac gyver'"""
+"""Constants of escape game mac gyver'"""
 
-#Paramètres de la fenêtre
+#Params of window
 NUMBER_SIDE_SPRITE = 15
 SPRITE_SIZE = 40
 WINDOW_SIDE = NUMBER_SIDE_SPRITE * SPRITE_SIZE
 
-#Personnalisation de la fenêtre
+#Personnalisation of window
 WINDOW_TITLE = "MC GYVER"
 ICONE_IMAGE = "images/macgyver.png"
 
-#Listes des images du jeu
+#List images of game
 HOME_IMAGE = "images/home.jpg"
 BACKGROUND_IMAGE = "images/fond.jpg"
 WALL_IMAGE = "images/mur.png"

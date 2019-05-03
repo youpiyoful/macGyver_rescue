@@ -15,19 +15,19 @@ class Level:
 	def generate(self):
 		"""Method for generate level by file.
 		We create a general list, who contain a list by line to display"""
-		#On ouvre le file
+		#we open file
 		with open(self.file, "r") as file:
 			structure_level = []
-			#On parcourt les lines du file
+			#we rune line of file
 			for line in file:
 				line_level = []
-				#On parcourt les sprites (lettres) contenus dans le file
+				#we run sprites (letters) contain in file
 				for sprite in line:
-					#On ignore les "\n" de fin de line
+					#we ignore the "\n" of end line
 					if sprite != '\n':
-						#On ajoute le sprite à la liste de la line
+						#we add the sprite at list of the line
 						line_level.append(sprite)
-				#On ajoute la line à la liste du level
+				#we add the line à la liste du level
 				structure_level.append(line_level)
 			#On sauvegarde cette structure
 			self.structure = structure_level

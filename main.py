@@ -1,5 +1,4 @@
 # -*- coding: Utf-8 -*
-
 """
 game mc_gyver_rescue
 escape game with 3 objects for win.
@@ -28,10 +27,21 @@ pygame.display.set_caption(WINDOW_TITLE)
 #PRINCIPAL LOOP
 carry_on = 1
 
-while carry_on:	
-    #Loading and display of home screen
-    home = pygame.image.load(HOME_IMAGE).convert()
+def loading_home_page(image):
+    home = pygame.image.load(image).convert()
     window.blit(home, (0,0))
+
+def display_new_position():
+        #Displays at new positions
+        window.blit(fond, (0,0))
+        level.display(window)
+        window.blit(mc.direction, (mc.x, mc.y))
+        pygame.display.flip()
+
+
+while carry_on:
+
+    loading_home_page(HOME_IMAGE)
 
     #refresh
     pygame.display.flip()
@@ -46,7 +56,6 @@ while carry_on:
         #Limit of loop speed
         pygame.time.Clock().tick(30)
 
-        #GAME LOOP
         for event in pygame.event.get():
         
             #If user leave, we make variables to loop
@@ -112,14 +121,8 @@ while carry_on:
                 elif event.key == K_DOWN:
                     mc.moove('down')			
             
-        #Displays at new positions
-        window.blit(fond, (0,0))
-        level.display(window)
-        window.blit(mc.direction, (mc.x, mc.y))
-        pygame.display.flip()
-
-        #Displays at new positions
-        if level.structure[mc.case_y][mc.case_x] == 'e':
+        display_new_position()
+        if level.structure[mc.case_y][mc.case_x] == 'e': #and mc_gyver == 3
             carry_on_game = 0
 
 ############### # IDEA:

@@ -3,7 +3,7 @@ Game Mac Gyver Rescue
 Jeu dans lequel Mac Gyver doit réussir à rammasser trois objets pour endormir le gardien et s'échapper.
 
 Script Python
-Fichiers : main.py, classes.py, config.py, n1, n2 + images
+Fichiers : main.py, classes.py, config.py, l1, l2 + images
 """
 
 

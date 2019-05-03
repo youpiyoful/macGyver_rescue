@@ -1,11 +1,11 @@
 # -*- coding: Utf-8 -*
 
 """
-game Donkey Kong Labyrinthe
-game dans lequel on doit déplacer DK jusqu'aux bananes à travers un labyrinthe.
+game mc_gyver_rescue
+escape game with 3 objects for win.
 
 Script Python
-Fichiers : mclabyrinthe.py, classes.py, constantes.py, l1, l2 + images
+Files : main.py, classes.py, constantes.py, l1, l2 + images
 """
 
 import pygame
@@ -119,7 +119,7 @@ while carry_on:
         pygame.display.flip()
 
         #Displays at new positions
-        if level.structure[mc.case_y][mc.case_x] == 'a':
+        if level.structure[mc.case_y][mc.case_x] == 'e':
             carry_on_game = 0
 
 ############### # IDEA:

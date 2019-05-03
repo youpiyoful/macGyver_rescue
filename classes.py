@@ -1,115 +1,122 @@
-"""Classes du jeu MC Gyver Rescue"""
+#!/usr/bin/python3
+# -*- coding: Utf-8 -*
+"""Classes du jeu de Labyrinthe Donkey Kong"""
 
 import pygame
-from pygame.locals import *
-from config import *
+from pygame.locals import * 
+from constantes import *
 
 class Level:
 	"""Class for create level"""
-	def __init__(self, file):
-		self.FILE = fichier
+	def __init__(self, fichier):
+		self.fichier = fichier
 		self.structure = 0
-
-
+	
+	
 	def generate(self):
 		"""Method for generate level by file.
 		We create a general list, who contain a list by line to display"""
-		#we open the file
-		with open(self.file, "r") as file:
-			level_structure = []
-			#we run each line of file
-			for line in file:
-				level_line = []
-				#we run the sprites (letters) contain by the file
+		#On ouvre le fichier
+		with open(self.fichier, "r") as fichier:
+			structure_level = []
+			#On parcourt les lines du fichier
+			for line in fichier:
+				line_level = []
+				#On parcourt les sprites (lettres) contenus dans le fichier
 				for sprite in line:
-					#we escape \n
+					#On ignore les "\n" de fin de line
 					if sprite != '\n':
-						#we add the sprite at list of the line
-						level_line.append(sprite)
-				#we add the line to list of level
-				level_structure.append(level_line)
-			#we save this structure
-			self.structure = level_structure
-
-
+						#On ajoute le sprite à la liste de la line
+						line_level.append(sprite)
+				#On ajoute la line à la liste du level
+				structure_level.append(line_level)
+			#On sauvegarde cette structure
+			self.structure = structure_level
+	
+	
 	def display(self, window):
 		"""Méthod for display level by list of structure output by generate()"""
 		#Loading images
-		wall = pygame.image.load(WALL).convert()
-		# start = pygame.image.load(image_depart).convert()
-		# arrivee = pygame.image.load(image_arrivee).convert_alpha()
-
-		#we run the list of level
-		line_num = 0
+		wall = pygame.image.load(WALL_IMAGE).convert()
+		depart = pygame.image.load(START_IMAGE).convert()
+		arrivee = pygame.image.load(ARRIVAL_IMAGE).convert_alpha()
+		
+		#On parcourt la liste du level
+		num_line = 0
 		for line in self.structure:
-			#we run the listes of lines
-			case_num = 0
+			#On parcourt les listes de lines
+			num_case = 0
 			for sprite in line:
-				#we calcul real position in pixels
-				x = case_num * SPRITE_SIZE
-				y = line_num * SPRITE_SIZE
-				if sprite == 'w':		   #w = Wall
-					fenetre.blit(wall, (x,y))
-				elif sprite == 's':		   #s = Start
-					fenetre.blit(start, (x,y))
+				#On calcule la position réelle en pixels
+				x = num_case * SPRITE_SIZE
+				y = num_line * SPRITE_SIZE
+				if sprite == 'm':		   #m = wall
+					window.blit(wall, (x,y))
+				elif sprite == 'd':		   #d = Départ
+					window.blit(depart, (x,y))
 				elif sprite == 'a':		   #a = Arrivée
-					fenetre.blit(arrivee, (x,y))
-				case_num += 1
-			line_num += 1
-
-
-
-
-class Perso:
-	"""Class for create character"""
+					window.blit(arrivee, (x,y))
+				num_case += 1
+			num_line += 1
+			
+			
+			
+			
+class Character:
+	"""Classe permettant de créer un character"""
 	def __init__(self, character, level):
-		#Sprites of character
-		self.character = pygame.image.load(CHARACTER).convert_alpha()
-
-		#Position of character in cases and in pixels
-		self.sprite_x = 0
-		self.sprite_y = 0
+		#Sprites du character
+		self.right = pygame.image.load(character).convert_alpha()
+		self.left = pygame.image.load(character).convert_alpha()
+		self.up = pygame.image.load(character).convert_alpha()
+		self.down = pygame.image.load(character).convert_alpha()
+		#Position du character en cases et en pixels
+		self.case_x = 0
+		self.case_y = 0
 		self.x = 0
 		self.y = 0
-
-		#level dans lequel le personnage se trouve
+		#Direction par défaut
+		self.direction = self.right
+		#Level dans lequel le character se trouve 
 		self.level = level
-
-
+	
+	
 	def moove(self, direction):
-		"""Method for moove the character"""
-
-		#Moove right
+		"""Methode permettant de déplacer le character"""
+		
+		#Déplacement vers la right
 		if direction == 'right':
-			#For dont out of screen
-			if self.sprite_x < (number_sprites_side - 1):
-				#We verify than case is not a wall
-				if self.level.structure[self.sprite_y][self.sprite_x+1] != 'w':
-					#Moove 1 case
-					self.sprite_x += 1
-					#Calcul of position "real" in pixel
-					self.x = self.sprite_x * SPRITE_SIZE
-
-		#Moove left
+			#Pour ne pas dépasser l'écran
+			if self.case_x < (NUMBER_SIDE_SPRITE - 1):
+				#On vérifie que la case de destination n'est pas un wall
+				if self.level.structure[self.case_y][self.case_x+1] != 'm':
+					#Déplacement d'une case
+					self.case_x += 1
+					#Calcul de la position "réelle" en pixel
+					self.x = self.case_x * SPRITE_SIZE
+			#Image dans la bonne direction
+			self.direction = self.right
+		
+		#Déplacement vers la left
 		if direction == 'left':
-			if self.sprite_x > 0:
-				if self.level.structure[self.sprite_y][self.sprite_x-1] != 'w':
-					self.sprite_x -= 1
-					self.x = self.sprite_x * SPRITE_SIZE
-			# self.direction = self.left
-
-		#Moove up
+			if self.case_x > 0:
+				if self.level.structure[self.case_y][self.case_x-1] != 'm':
+					self.case_x -= 1
+					self.x = self.case_x * SPRITE_SIZE
+			self.direction = self.left
+		
+		#Déplacement vers le up
 		if direction == 'up':
-			if self.sprite_y > 0:
-				if self.level.structure[self.sprite_y-1][self.sprite_x] != 'w':
-					self.sprite_y -= 1
-					self.y = self.sprite_y * SPRITE_SIZE
-			# self.direction = self.up
-
-		#Moove down
+			if self.case_y > 0:
+				if self.level.structure[self.case_y-1][self.case_x] != 'm':
+					self.case_y -= 1
+					self.y = self.case_y * SPRITE_SIZE
+			self.direction = self.up
+		
+		#Déplacement vers le down
 		if direction == 'down':
-			if self.sprite_y < (nombre_sprite_cote - 1):
-				if self.level.structure[self.sprite_y+1][self.sprite_x] != 'w':
-					self.sprite_y += 1
-					self.y = self.sprite_y * SPRITE_SIZE
-			# self.direction = self.down
+			if self.case_y < (NUMBER_SIDE_SPRITE - 1):
+				if self.level.structure[self.case_y+1][self.case_x] != 'm':
+					self.case_y += 1
+					self.y = self.case_y * SPRITE_SIZE
+			self.direction = self.down

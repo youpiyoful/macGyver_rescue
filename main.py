@@ -1,153 +1,127 @@
+#!/usr/bin/python3
+# -*- coding: Utf-8 -*
+
 """
-Game Mac Gyver Rescue
-Jeu dans lequel Mac Gyver doit réussir à rammasser trois objets pour endormir le gardien et s'échapper.
+game Donkey Kong Labyrinthe
+game dans lequel on doit déplacer DK jusqu'aux bananes à travers un labyrinthe.
 
 Script Python
-Fichiers : main.py, classes.py, config.py, l1, l2 + images
+Fichiers : mclabyrinthe.py, classes.py, constantes.py, l1, l2 + images
 """
-
 
 import pygame
 from pygame.locals import *
+
 from classes import *
-from config import *
+from constantes import *
 
 pygame.init()
 
-
-
-# class Map:
-# 	def openWindow(self, large, long):
-# 		self.window = pygame.display.set_mode((large, long))
-# 	def loadBackground(self, backgroundImage):
-# 		self.background = pygame.image.load(backgroundImage).convert()
-# 	def stickBackground(self, background):
-
 #Open window Pygame
 window = pygame.display.set_mode((WINDOW_SIDE, WINDOW_SIDE))
-
-#Load background
-# background = pygame.image.load("background.jpg").convert()
-# window.blit(background, (0,0))
-
-#Load perso
-# perso = pygame.image.load("perso.png").convert_alpha()
-# position_perso = perso.get_rect()
-# window.blit(perso, position_perso)
-
-#Icon
-icon = pygame.image.load(ICON_IMAGE)
-pygame.display.set_icon(icon)
-
+#Icone
+icone = pygame.image.load(ICONE_IMAGE)
+pygame.display.set_icon(icone)
 #Title
 pygame.display.set_caption(WINDOW_TITLE)
 
 
-#Screen refresh
-# def screenRefresh():
-# 	pygame.display.flip()
+#PRINCIPAL LOOP
+carry_on = 1
 
-start = 1
-
-# PRINCIPAL LOOP
-while start:
+while carry_on:	
     #Loading and display of home screen
-    home = pygame.image.load(HOME).convert()
-    window.blit(home, (0,0))
+	home = pygame.image.load(HOME_IMAGE).convert()
+	window.blit(home, (0,0))
 
     #refresh
-    pygame.display.flip()
+	pygame.display.flip()
 
     # we remake variables to 1 for each looping
-    game_continue = 1
-    home_continue = 1
+	carry_on_game = 1
+	carry_on_home = 1
 
     #MENU LOOP
-    while home_continue:
-
+	while carry_on_home:
+	
         #Limit of loop speed
-        pygame.time.Clock().tick(30)
-        
-        #GAME LOOP
-        for event in pygame.event.get():
+		pygame.time.Clock().tick(30)
 
+		#GAME LOOP
+		for event in pygame.event.get():
+		
             #If user leave, we make variables to loop
             #at 0 for don't launch anything and exit
-            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-                home_continue = 0
-                game_continue = 0
-                start = 0
-                #Variable for choice choice
-                choice = 0
-
-            elif event.type == KEYDOWN:
+			if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+				carry_on_home = 0
+				carry_on_game = 0
+				carry_on = 0
+                #Variable for choice level
+				choice = 0
+				
+			elif event.type == KEYDOWN:				
                 #Launch choice 1
-                if event.key == K_F1:
-                    home_continue = 0 #Leave home
-                    choice = 'l1' #We init the choice to Launch
+				if event.key == K_F1:
+					carry_on_home = 0	#Leave home
+					choice = 'l1'		#We init the choice to Launch
                 # launch to choice 2
-                elif event.key == K_F2:
-                    home_continue = 0
-                    choice = 'l2'
+				elif event.key == K_F2:
+					carry_on_home = 0
+					choice = 'l2'
+			
+		
+	#Verification than user have make a choice for don't load if he leaves
+	if choice != 0:
+    	#Loading background
+		fond = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
 
-#Verification than user have make a choice for don't load if he leaves
-if choice != 0:
-    #Loading background
-    background = pygame.image.load(background_image).convert()
+    	#Generate a choice from a FILE
+		level = Level(choice)
+		level.generate()
+		level.display(window)
 
-    #Generate a choice from a FILE
-    level = Level(choice)
-    level.generate()
-    level.display(window)
+    	#Creation of mc Gyver
+		mc = Character(IMAGE_CHARACTER, level)
 
-    #Creation of mc Gyver
-    mc_giver = Perso(CHARACTER, level)
+				
+	#GAME LOOP
+	while carry_on_game:
+	
+    	#Limit speed looping
+		pygame.time.Clock().tick(30)
+	
+		for event in pygame.event.get():
+		
+			#if user leave, we make the variable who continue the game quand
+			#the variable general at 0 for close the window
+			if event.type == QUIT:
+				carry_on_game = 0
+				carry_on = 0
+		
+			elif event.type == KEYDOWN:
+            	#if user push escape here, we comeback only at home
+				if event.key == K_ESCAPE:
+					carry_on_game = 0
+					
+            	#Keyboard of moove to mc_giver
+				elif event.key == K_RIGHT:
+					mc.moove('right')
+				elif event.key == K_LEFT:
+					mc.moove('left')
+				elif event.key == K_UP:
+					mc.moove('up')
+				elif event.key == K_DOWN:
+					mc.moove('down')			
+			
+    	#Displays at new positions
+		window.blit(fond, (0,0))
+		level.display(window)
+		window.blit(mc.direction, (mc.x, mc.y))
+		pygame.display.flip()
 
-#Looping of game_continue
-while game_continue:
-
-    #Limit speed looping
-    pygame.time.Clock().tick(30)
-
-    for event in pygame.event.get():
-
-        #if user leave, we make the variable who continue the game quand
-        #the variable general at 0 for close the window
-        if event.type == QUIT:
-            game_continue = 0
-            start = 0
-
-        elif event.type == KEYDOWN:
-            #if user push escape here, we comeback only at home
-            if event.key == K_ESCAPE:
-                game_continue = 0
-
-            #Keyboard of moove to mc_giver
-        elif event.key == K_RIGHT:
-            mc_giver.moove('right')
-        elif event.key == K_LEFT:
-            mc_giver.moove('left')
-        elif event.key == K_UP:
-            mc_giver.moove('up')
-        elif event.key == K_DOWN:
-            mc_giver.moove('down')
-
-    #Displays at new positions
-    window.blit(background, (0,0))
-    level.display(window)
-    window.blit(mc_giver, (mc_giver.x, mc_giver.y))
-
-    pygame.display.flip()
-
-    #victory -> Comeback to home
-    if level.structure[mc_giver.sprite_y][mc_giver.sprite_x] == 'a':
-        game_continue = 0
-
-
-
-    while condition:
-        pygame.time.Clock().tick(30)
-        pass
+    	#Displays at new positions
+		if level.structure[mc.case_y][mc.case_x] == 'a':
+			carry_on_game = 0
 
 ############### # IDEA:
 # mc_giver = 0
@@ -158,29 +132,3 @@ while game_continue:
 #     game = win !
 # else:
 #     game = lost !
-
-
-#Infinite loop
-# continuer = 1
-# while continuer:
-# 	for event in pygame.event.get():	#Attente des événements
-# 		if event.type == QUIT:
-# 			continuer = 0
-# 		if event.type == KEYDOWN:
-# 			# pygame.key.set_repeat(400, 30)
-# 			if event.key == K_DOWN:	#Si "flèche bas"
-# 				#On descend le perso
-# 				position_perso = position_perso.move(0,3)
-# 				# pygame.key.set_repeat(400, 30) pour répéter l'action quand la touche reste enfoncé.
-# 			if event.key == K_UP:
-# 				position_perso = position_perso.move(0,-3)
-# 			if event.key == K_LEFT:
-# 				position_perso = position_perso.move(-3,0)
-# 			if event.key == K_RIGHT:
-# 				position_perso = position_perso.move(3,0)
-#
-# 	#Re-sticking
-# 	window.blit(background, (0,0))
-# 	window.blit(perso, position_perso)
-# 	#Refresh
-# 	pygame.display.flip()

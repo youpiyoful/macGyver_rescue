@@ -25,11 +25,11 @@ class Level:
 				for sprite in line:
 					#we ignore the "\n" of end line
 					if sprite != '\n':
-						#we add the sprite at list of the line
+						#we add the sprite at line of level
 						line_level.append(sprite)
-				#we add the line à la liste du level
+				#we add the line at structure level
 				structure_level.append(line_level)
-			#On sauvegarde cette structure
+			#we save structure 
 			self.structure = structure_level
 	
 	
@@ -37,28 +37,34 @@ class Level:
 		"""Méthod for display level by list of structure output by generate()"""
 		#Loading images
 		wall = pygame.image.load(WALL_IMAGE).convert()
-		depart = pygame.image.load(START_IMAGE).convert()
-		arrivee = pygame.image.load(ARRIVAL_IMAGE).convert_alpha()
+		start = pygame.image.load(START_IMAGE).convert()
+		end = pygame.image.load(ARRIVAL_IMAGE).convert_alpha()
+
 		
-		#On parcourt la liste du level
+		#we run the level's list
 		num_line = 0
 		for line in self.structure:
-			#On parcourt les listes de lines
+			#we run list of lines
 			num_case = 0
 			for sprite in line:
-				#On calcule la position réelle en pixels
+				#we calcul the real position in pixels
 				x = num_case * SPRITE_SIZE
 				y = num_line * SPRITE_SIZE
 				if sprite == 'w':		   #m = wall
 					window.blit(wall, (x,y))
-				elif sprite == 's':		   #d = Départ
-					window.blit(depart, (x,y))
-				elif sprite == 'e':		   #a = Arrivée
-					window.blit(arrivee, (x,y))
+				elif sprite == 's':		   #s = start
+					window.blit(start, (x,y))
+				elif sprite == 'e':		   #e = end
+					window.blit(end, (x,y))
 				num_case += 1
 			num_line += 1
 			
-			
+	def init_object_place():
+		""" Method for display object randomly in the map """ 
+		#Loading image
+		ether = pygame.image.load(ETHER).convert()
+		tube = pygame.image.load(TUBE).convert()
+		xxxx = pygame.image.load().convert()
 			
 			
 class Character:

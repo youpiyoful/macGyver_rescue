@@ -8,7 +8,9 @@ Files : main.py, classes.py, constantes.py, l1, l2 + images
 """
 
 import pygame
+
 from pygame.locals import *
+from random import *
 
 from classes import *
 from constantes import *
@@ -37,6 +39,16 @@ def display_new_position():
         level.display(window)
         window.blit(mc.direction, (mc.x, mc.y))
         pygame.display.flip()
+
+def end_game(character):
+    win = 1
+    lost = 0
+    if character == 3:
+        print("you win !")
+        return win
+    else:
+        print("game over !")
+        return lost
 
 
 while carry_on:
@@ -72,11 +84,12 @@ while carry_on:
                 if event.key == K_F1:
                     carry_on_home = 0	#Leave home
                     choice = 'l1'		#We init the choice to Launch
+                    mc_gyver = 3
                 # launch to choice 2
                 elif event.key == K_F2:
                     carry_on_home = 0
                     choice = 'l2'
-            
+                    mc_gyver = 0
         
     #Verification than user have make a choice for don't load if he leaves
     if choice != 0:
@@ -111,7 +124,7 @@ while carry_on:
                 if event.key == K_ESCAPE:
                     carry_on_game = 0
                     
-                #Keyboard of moove to mc_giver
+                #Keyboard of moove to mc_gyver
                 elif event.key == K_RIGHT:
                     mc.moove('right')
                 elif event.key == K_LEFT:
@@ -120,10 +133,11 @@ while carry_on:
                     mc.moove('up')
                 elif event.key == K_DOWN:
                     mc.moove('down')			
-            
+        
         display_new_position()
+        # mc_gyver = 2
         if level.structure[mc.case_y][mc.case_x] == 'e': #and mc_gyver == 3
-            carry_on_game = 0
+            carry_on_game = end_game(mc_gyver)
 
 ############### # IDEA:
 # mc_giver = 0

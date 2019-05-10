@@ -2,7 +2,9 @@
 """Classes of game Mc-gyver"""
 
 import pygame
-from pygame.locals import * 
+from pygame.locals import *
+from random import *
+
 from constantes import *
 
 class Level:
@@ -65,6 +67,24 @@ class Level:
 		ether = pygame.image.load(ETHER).convert()
 		tube = pygame.image.load(TUBE).convert()
 		xxxx = pygame.image.load().convert()
+		
+		#we run the level's list
+		num_line = 0
+		for line in self.structure:
+			#we run list of lines
+			num_case = 0
+			for sprite in line:
+				#we calcul the real position in pixels
+				x = num_case * SPRITE_SIZE
+				y = num_line * SPRITE_SIZE
+				if sprite == '0':		   #0 = empty case
+					 = uniform(12, 18)
+				elif sprite == 's':		   #s = start
+					window.blit(start, (x,y))
+				elif sprite == 'e':		   #e = end
+					window.blit(end, (x,y))
+				num_case += 1
+			num_line += 1
 			
 			
 class Character:

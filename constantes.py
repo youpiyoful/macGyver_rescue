@@ -3,7 +3,7 @@
 
 #Params of window
 NUMBER_SIDE_SPRITE = 15
-SPRITE_SIZE = 40
+SPRITE_SIZE = 30
 WINDOW_SIDE = NUMBER_SIDE_SPRITE * SPRITE_SIZE
 
 #Personnalisation of window
@@ -12,8 +12,8 @@ ICONE_IMAGE = "images/macgyver.png"
 
 #List images of game
 HOME_IMAGE = "images/home.jpg"
-BACKGROUND_IMAGE = "images/fond.jpg"
-WALL_IMAGE = "images/mur.png"
-START_IMAGE = "images/depart.png"
+BACKGROUND_IMAGE = "images/background.jpg"
+WALL_IMAGE = "images/wall.png"
+START_IMAGE = "images/start.png"
 ARRIVAL_IMAGE = "images/guard.png"
 IMAGE_CHARACTER = "images/macgyver.png"

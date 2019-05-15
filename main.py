@@ -50,6 +50,20 @@ def end_game(character):
         print("game over !")
         return lost
 
+def init_map(level_choice):
+    #Verification than user have make a choice for don't load if he leaves
+    if choice != 0:
+        #Loading background
+        fond = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
+
+        #Generate a choice from a FILE
+        level = Level(choice)
+        level.generate()
+        level.display(window)
+
+        #Creation of mc Gyver
+        mc = Character(IMAGE_CHARACTER, level)
+
 
 while carry_on:
 
@@ -91,19 +105,7 @@ while carry_on:
                     choice = 'l2'
                     mc_gyver = 0
         
-    #Verification than user have make a choice for don't load if he leaves
-    if choice != 0:
-        #Loading background
-        fond = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
-
-        #Generate a choice from a FILE
-        level = Level(choice)
-        level.generate()
-        level.display(window)
-
-        #Creation of mc Gyver
-        mc = Character(IMAGE_CHARACTER, level)
-
+    init_map(choice)
                 
     #GAME LOOP
     while carry_on_game:
@@ -138,6 +140,10 @@ while carry_on:
         # mc_gyver = 2
         if level.structure[mc.case_y][mc.case_x] == 'e': #and mc_gyver == 3
             carry_on_game = end_game(mc_gyver)
+
+ether = Object(ETHER, level, "E")
+needle = Object(NEEDLE, level, "N")
+tube = Object(TUBE, level, "T")
 
 ############### # IDEA:
 # mc_giver = 0

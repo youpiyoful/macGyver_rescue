@@ -13,10 +13,12 @@ ICONE_IMAGE = "images/macgyver.png"
 #List images of game
 ETHER = "images/ether.jpg"
 TUBE = "images/tube.jpg"
-
+NEEDLE = "images/tube.jpg"
 HOME_IMAGE = "images/home.jpg"
 BACKGROUND_IMAGE = "images/background.jpg"
 WALL_IMAGE = "images/wall.png"
 START_IMAGE = "images/start.png"
 ARRIVAL_IMAGE = "images/guard.png"
 IMAGE_CHARACTER = "images/macgyver.png"
+WIN = "images/win.png"
+LOST = "images/lost.png"

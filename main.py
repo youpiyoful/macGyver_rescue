@@ -141,9 +141,9 @@ while carry_on:
         if level.structure[mc.case_y][mc.case_x] == 'e': #and mc_gyver == 3
             carry_on_game = end_game(mc_gyver)
 
-ether = Object(ETHER, level, "E")
-needle = Object(NEEDLE, level, "N")
-tube = Object(TUBE, level, "T")
+# ether = Object(ETHER, level, "E")
+# needle = Object(NEEDLE, level, "N")
+# tube = Object(TUBE, level, "T")
 
 ############### # IDEA:
 # mc_giver = 0

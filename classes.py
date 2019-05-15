@@ -61,30 +61,30 @@ class Level:
 				num_case += 1
 			num_line += 1
 			
-	def init_object_place():
-		""" Method for display object randomly in the map """ 
-		#Loading image
-		ether = pygame.image.load(ETHER).convert()
-		tube = pygame.image.load(TUBE).convert()
-		xxxx = pygame.image.load().convert()
+	# def init_object_place():
+	# 	""" Method for display object randomly in the map """ 
+	# 	#Loading image
+	# 	ether = pygame.image.load(ETHER).convert()
+	# 	tube = pygame.image.load(TUBE).convert()
+	# 	xxxx = pygame.image.load().convert()
 		
-		#we run the level's list
-		num_line = 0
-		for line in self.structure:
-			#we run list of lines
-			num_case = 0
-			for sprite in line:
-				#we calcul the real position in pixels
-				x = num_case * SPRITE_SIZE
-				y = num_line * SPRITE_SIZE
-				if sprite == '0':		   #0 = empty case
-					 = uniform(12, 18)
-				elif sprite == 's':		   #s = start
-					window.blit(start, (x,y))
-				elif sprite == 'e':		   #e = end
-					window.blit(end, (x,y))
-				num_case += 1
-			num_line += 1
+	# 	#we run the level's list
+	# 	num_line = 0
+	# 	for line in self.structure:
+	# 		#we run list of lines
+	# 		num_case = 0
+	# 		for sprite in line:
+	# 			#we calcul the real position in pixels
+	# 			x = num_case * SPRITE_SIZE
+	# 			y = num_line * SPRITE_SIZE
+	# 			if sprite == '0':		   #0 = empty case
+	# 				 = uniform(12, 18)
+	# 			elif sprite == 's':		   #s = start
+	# 				window.blit(start, (x,y))
+	# 			elif sprite == 'e':		   #e = end
+	# 				window.blit(end, (x,y))
+	# 			num_case += 1
+	# 		num_line += 1
 			
 			
 class Character:
@@ -145,3 +145,47 @@ class Character:
 					self.case_y += 1
 					self.y = self.case_y * SPRITE_SIZE
 			self.direction = self.down
+
+# Class to create one of the items
+class Object:
+
+    def __init__(self, obj, level, letter):
+
+        # Load the sprite of the item
+        self.obj = pygame.image.load(obj).convert_alpha
+
+        # Initial settings for the item
+        self.level = level
+        self.case_x, self.case_y = self.randpos()
+        self.x = self.case_x * w_sprite
+        self.y = self.case_y * w_sprite
+
+    # Method that calculate a random pos to pop the item
+    def randpos(self):
+        count_max = 1
+        count = 0
+
+        # A loop to check of the position picked by random is a freespace
+        while count < count_max:
+            self.case_x = random.randint(0, 14)
+            self.case_y = random.randint(0, 14)
+
+            # If the sprite is a freespace
+            if self.level.structure[self.case_y][self.case_x] == '0':
+
+                # then change it to a mark where the program gonna pop the item.
+                self.level.structure[self.case_y][self.case_x] = letter
+
+                # And quit the loop
+                count += 1
+                break
+        return self.case_x, self.case_y
+
+    # Method that display the item on the map
+    def display(self, Window):
+
+        # Load the sprite
+        c_obj = pygame.image.load("images/" + self.obj + ".png").convert_alpha()
+
+        # Display the item on screen
+        Window.blit(c_obj, (self.x, self.y))

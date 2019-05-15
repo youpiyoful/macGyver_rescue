@@ -35,7 +35,7 @@ def loading_home_page(image):
 
 def display_new_position():
         #Displays at new positions
-        window.blit(fond, (0,0))
+        window.blit(background, (0,0))
         level.display(window)
         window.blit(mc.direction, (mc.x, mc.y))
         pygame.display.flip()
@@ -50,19 +50,19 @@ def end_game(character):
         print("game over !")
         return lost
 
-def init_map(level_choice):
-    #Verification than user have make a choice for don't load if he leaves
-    if choice != 0:
-        #Loading background
-        fond = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
+# def init_map(level_choice):
+#     #Verification than user have make a choice for don't load if he leaves
+#     if choice != 0:
+#         #Loading background
+#         background = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
 
-        #Generate a choice from a FILE
-        level = Level(choice)
-        level.generate()
-        level.display(window)
+#         #Generate a choice from a FILE
+#         level = Level(choice)
+#         level.generate()
+#         level.display(window)
 
-        #Creation of mc Gyver
-        mc = Character(IMAGE_CHARACTER, level)
+#         #Creation of mc Gyver
+#         mc = Character(IMAGE_CHARACTER, level)
 
 
 while carry_on:
@@ -105,7 +105,28 @@ while carry_on:
                     choice = 'l2'
                     mc_gyver = 0
         
-    init_map(choice)
+    # init_map(choice)
+        
+    #Verification than user have make a choice for don't load if he leaves
+    if choice != 0:
+        #Loading background
+        background = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
+
+        #Generate a choice from a FILE
+        level = Level(choice)
+        level.generate()
+        level.display(window)
+
+        #Generate random object on the map
+
+        ether = Object(ETHER, level, "E")
+        ether.display()
+        needle = Object(NEEDLE, level, "N")
+        tube = Object(TUBE, level, "T")
+
+
+        #Creation of mc Gyver
+        mc = Character(IMAGE_CHARACTER, level)
                 
     #GAME LOOP
     while carry_on_game:
@@ -141,9 +162,7 @@ while carry_on:
         if level.structure[mc.case_y][mc.case_x] == 'e': #and mc_gyver == 3
             carry_on_game = end_game(mc_gyver)
 
-# ether = Object(ETHER, level, "E")
-# needle = Object(NEEDLE, level, "N")
-# tube = Object(TUBE, level, "T")
+
 
 ############### # IDEA:
 # mc_giver = 0

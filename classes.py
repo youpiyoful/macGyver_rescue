@@ -146,46 +146,41 @@ class Character:
 					self.y = self.case_y * SPRITE_SIZE
 			self.direction = self.down
 
-# Class to create one of the items
-class Object:
+# # Class to create one of the items
+# class Object:
 
-    def __init__(self, obj, level, letter):
+#     def __init__(self, obj, level, letter):
+#         # Load the sprite of the item
+#         self.obj = pygame.image.load(obj).convert_alpha
+#         # Initial settings for the item
+#         self.level = level
+#         self.case_x, self.case_y = self.randpos()
+#         self.x = self.case_x * w_sprite
+#         self.y = self.case_y * w_sprite
 
-        # Load the sprite of the item
-        self.obj = pygame.image.load(obj).convert_alpha
+    # # Method that calculate a random pos to pop the item
+    # def randpos(self):
+    #     count_max = 1
+    #     count = 0
 
-        # Initial settings for the item
-        self.level = level
-        self.case_x, self.case_y = self.randpos()
-        self.x = self.case_x * w_sprite
-        self.y = self.case_y * w_sprite
+    #     # A loop to check of the position picked by random is a freespace
+    #     while count < count_max:
+    #         self.case_x = random.randint(0, 14)
+    #         self.case_y = random.randint(0, 14)
 
-    # Method that calculate a random pos to pop the item
-    def randpos(self):
-        count_max = 1
-        count = 0
+    #         # If the sprite is a freespace
+    #         if self.level.structure[self.case_y][self.case_x] == '0':
+    #             # then change it to a mark where the program gonna pop the item.
+    #             self.level.structure[self.case_y][self.case_x] = letter
+    #             # And quit the loop
+    #             count += 1
+    #             break
 
-        # A loop to check of the position picked by random is a freespace
-        while count < count_max:
-            self.case_x = random.randint(0, 14)
-            self.case_y = random.randint(0, 14)
-
-            # If the sprite is a freespace
-            if self.level.structure[self.case_y][self.case_x] == '0':
-
-                # then change it to a mark where the program gonna pop the item.
-                self.level.structure[self.case_y][self.case_x] = letter
-
-                # And quit the loop
-                count += 1
-                break
-        return self.case_x, self.case_y
+    #     return self.case_x, self.case_y
 
     # Method that display the item on the map
-    def display(self, Window):
-
-        # Load the sprite
-        c_obj = pygame.image.load("images/" + self.obj + ".png").convert_alpha()
-
-        # Display the item on screen
-        Window.blit(c_obj, (self.x, self.y))
+    # def display(self, Window):
+    #     # Load the sprite
+    #     c_obj = pygame.image.load("images/" + self.obj + ".png").convert_alpha()
+    #     # Display the item on screen
+    #     Window.blit(c_obj, (self.x, self.y))

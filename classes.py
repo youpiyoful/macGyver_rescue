@@ -111,14 +111,19 @@ class Character:
 		
 		#Moove right
 		if direction == 'right':
+			
 			#For don t out of screen
 			if self.case_x < (NUMBER_SIDE_SPRITE - 1):
+				
 				#We verify than the case of destination is not a wall
 				if self.level.structure[self.case_y][self.case_x+1] != 'w':
+
 					#Moove 1 case
 					self.case_x += 1
+
 					#Calcul of position "real" in pixel
 					self.x = self.case_x * SPRITE_SIZE
+
 			#Image in the good direction
 			self.direction = self.right
 		

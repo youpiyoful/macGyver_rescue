@@ -15,25 +15,27 @@ from random import *
 from classes import *
 from constantes import *
 
-def initialize_game(window_side, icone_image, window_title):
-    pygame.init()
-    #Open window Pygame
-    window = pygame.display.set_mode((window_side, window_side))
-    #Icone
-    icone = pygame.image.load(icone_image)
-    pygame.display.set_icon(icone)
-    #Title
-    pygame.display.set_caption(window_title)
+# def initialize():
+pygame.init()
+#Open window Pygame
+window = pygame.display.set_mode((WINDOW_SIDE, WINDOW_SIDE))
+#Icone
+icone = pygame.image.load(ICONE_IMAGE)
+pygame.display.set_icon(icone)
+#Title
+pygame.display.set_caption(WINDOW_TITLE)
+
+
 
 def loading_home_page(image):
     home = pygame.image.load(image).convert()
     window.blit(home, (0,0))
 
-def display_new_position(background):
+def display_new_position(background, level, character):
         #Displays at new positions
         window.blit(background, (0,0))
         level.display(window)
-        window.blit(mc.direction, (mc.x, mc.y))
+        window.blit(character.direction, (character.x, character.y))
         pygame.display.flip()
 
 def end_game(character):
@@ -60,108 +62,115 @@ def end_game(character):
 #         #Creation of mc Gyver
 #         mc = Character(IMAGE_CHARACTER, level)
 
-#MAIN LOOP
-carry_on = 1
-# def main():
+def initialize_background():
+    #Loading background
+    background = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
+    return background
 
-while carry_on:
+def init_level(choice):
+    #Generate a choice from a FILE
+    level = Level(choice)
+    level.generate()
+    level.display(window)
+    return level
 
-    loading_home_page(HOME_IMAGE)
+def main():
+    # initialize()
+    #MAIN LOOP
+    carry_on = 1
 
-    #refresh
-    pygame.display.flip()
+    while carry_on:
 
-    # we remake variables to 1 for each looping
-    carry_on_game = 1
-    carry_on_home = 1
+        loading_home_page(HOME_IMAGE)
 
-    #MENU LOOP
-    while carry_on_home:
-    
-        #Limit of loop speed
-        pygame.time.Clock().tick(30)
+        #refresh
+        pygame.display.flip()
 
-        for event in pygame.event.get():
-        
-            #If user leave, we make variables to loop
-            #at 0 for don't launch anything and exit
-            if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
-                carry_on_home = 0
-                carry_on_game = 0
-                carry_on = 0
-                #Variable for choice level
-                choice = 0
-                
-            elif event.type == KEYDOWN:				
-                #Launch choice 1
-                if event.key == K_F1:
-                    carry_on_home = 0	#Leave home
-                    choice = 'l1'		#We init the choice to Launch
-                    mc_gyver = 3
-                # launch to choice 2
-                elif event.key == K_F2:
+        # we remake variables to 1 for each looping
+        carry_on_game = 1
+        carry_on_home = 1
+
+        #MENU LOOP
+        while carry_on_home:
+            #Limit of loop speed
+            pygame.time.Clock().tick(30)
+
+            for event in pygame.event.get():
+            
+                #If user leave, we make variables to loop
+                #at 0 for don't launch anything and exit
+                if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                     carry_on_home = 0
-                    choice = 'l2'
-                    mc_gyver = 0
-        
-    # init_map(choice)
-        
-    #Verification than user have make a choice for don't load if he leaves
-    if choice != 0:
-        #Loading background
-        background = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
-        #Generate a choice from a FILE
-        level = Level(choice)
-        level.generate()
-        level.display(window)
-        #Generate random object on the map
-        # ether = Object(ETHER, level, "E")
-        # ether.display()
-        # needle = Object(NEEDLE, level, "N")
-        # tube = Object(TUBE, level, "T")
-        #Creation of mc Gyver
-        mc = Character(IMAGE_CHARACTER, level)
-                
-    #GAME LOOP
-    while carry_on_game:
-        #Limit speed looping
-        pygame.time.Clock().tick(30)
-    
-        for event in pygame.event.get():
-        
-            #if user leave, we make the variable who continue the game quand
-            #the variable general at 0 for close the window
-            if event.type == QUIT:
-                carry_on_game = 0
-                carry_on = 0
-        
-            elif event.type == KEYDOWN:
-
-                #if user push escape here, we comeback only at home
-                if event.key == K_ESCAPE:
                     carry_on_game = 0
+                    carry_on = 0
+                    #Variable for choice level
+                    choice = 0
                     
-                #Keyboard of moove to mc_gyver
-                elif event.key == K_RIGHT:
-                    mc.moove('right')
-
-                elif event.key == K_LEFT:
-                    mc.moove('left')
-
-                elif event.key == K_UP:
-                    mc.moove('up')
-
-                elif event.key == K_DOWN:
-                    mc.moove('down')			
+                elif event.type == KEYDOWN:				
+                    #Launch choice 1
+                    if event.key == K_F1:
+                        carry_on_home = 0	#Leave home
+                        choice = 'l1'		#We init the choice to Launch
+                        mc_gyver = 3
+                    # launch to choice 2
+                    elif event.key == K_F2:
+                        carry_on_home = 0
+                        choice = 'l2'
+                        mc_gyver = 0
+            
+        # init_map(choice)
+            
+        #Verification than user have make a choice for don't load if he leaves
+        if choice != 0:
+            level = init_level(choice)
+            background = initialize_background()
+            #Generate random object on the map
+            # ether = Object(ETHER, level, "E")
+            # ether.display()
+            # needle = Object(NEEDLE, level, "N")
+            # tube = Object(TUBE, level, "T")
+            #Creation of mc Gyver
+            mc = Character(IMAGE_CHARACTER, level)
+                    
+        #GAME LOOP
+        while carry_on_game:
+            #Limit speed looping
+            pygame.time.Clock().tick(30)
         
-        display_new_position(background)
+            for event in pygame.event.get():
+            
+                #if user leave, we make the variable who continue the game quand
+                #the variable general at 0 for close the window
+                if event.type == QUIT:
+                    carry_on_game = 0
+                    carry_on = 0
+            
+                elif event.type == KEYDOWN:
 
-        # mc_gyver = 2
-        if level.structure[mc.case_y][mc.case_x] == 'e': #and mc_gyver == 3
-            carry_on_game = end_game(mc_gyver)
+                    #if user push escape here, we comeback only at home
+                    if event.key == K_ESCAPE:
+                        carry_on_game = 0
+                        
+                    #Keyboard of moove to mc_gyver
+                    elif event.key == K_RIGHT:
+                        mc.moove('right')
 
-initialize_game(WINDOW_SIDE, ICONE_IMAGE, WINDOW_TITLE)
-# main()
+                    elif event.key == K_LEFT:
+                        mc.moove('left')
+
+                    elif event.key == K_UP:
+                        mc.moove('up')
+
+                    elif event.key == K_DOWN:
+                        mc.moove('down')			
+            
+            display_new_position(background, level, mc)
+
+            # mc_gyver = 2
+            if level.structure[mc.case_y][mc.case_x] == 'e': #and mc_gyver == 3
+                carry_on_game = end_game(mc_gyver)
+
+main()
 
 
 ############### # IDEA:

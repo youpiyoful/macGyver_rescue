@@ -41,31 +41,44 @@ def display_new_position(background, level, character):
 def end_game(character):
     win = 1
     lost = 0
+    start_ticks = pygame.time.get_ticks() #starter tick
+
     if character == 3:
         print("you win !")
-        return win
+        seconds = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
+        # print(seconds) #print how many seconds
+        image_win = pygame.image.load(WIN).convert_alpha()
+        window.blit(image_lost, (0,0))
+
+        # if seconds == 10:
+        result = win
+
     else:
         print("game over !")
-        return lost
-
-# def init_map(level_choice):
-#     #Verification than user have make a choice for don't load if he leaves
-#     if choice != 0:
-#         #Loading background
-#         background = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
-
-#         #Generate a choice from a FILE
-#         level = Level(choice)
-#         level.generate()
-#         level.display(window)
-
-#         #Creation of mc Gyver
-#         mc = Character(IMAGE_CHARACTER, level)
+        seconds = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
+        # print(seconds) #print how many seconds
+        image_lost = pygame.image.load(LOST).convert_alpha()
+        window.blit(image_lost, (0,0))
+        
+        # if seconds > 10:
+        result = lost
+            
+    pygame.display.flip()
+    return result
 
 def initialize_background():
     #Loading background
     background = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
     return background
+
+def insert_object_randomly():
+    """ Generate object randomly on the map """
+    ether = Object(ETHER, level, "E")
+    ether.display()
+    needle = Object(NEEDLE, level, "N")
+    needle.display()
+    tube = Object(TUBE, level, "T")
+    tube.display()
 
 def init_level(choice):
     #Generate a choice from a FILE
@@ -75,10 +88,9 @@ def init_level(choice):
     return level
 
 def main():
-    # initialize()
-    #MAIN LOOP
     carry_on = 1
 
+    #MAIN LOOP
     while carry_on:
 
         loading_home_page(HOME_IMAGE)
@@ -118,17 +130,12 @@ def main():
                         choice = 'l2'
                         mc_gyver = 0
             
-        # init_map(choice)
             
         #Verification than user have make a choice for don't load if he leaves
         if choice != 0:
             level = init_level(choice)
             background = initialize_background()
-            #Generate random object on the map
-            # ether = Object(ETHER, level, "E")
-            # ether.display()
-            # needle = Object(NEEDLE, level, "N")
-            # tube = Object(TUBE, level, "T")
+            # insert_object_randomly()
             #Creation of mc Gyver
             mc = Character(IMAGE_CHARACTER, level)
                     
@@ -168,7 +175,15 @@ def main():
 
             # mc_gyver = 2
             if level.structure[mc.case_y][mc.case_x] == 'e': #and mc_gyver == 3
-                carry_on_game = end_game(mc_gyver)
+                end_game(mc_gyver)
+
+                # if event.key:
+                #     carry_on_game = end_game(mc_gyver)
+                # end_game(mc_gyver)
+                # if end_game(mc_gyver) == 0:
+                #     image_lost = pygame.image.load(LOST).convert_alpha()
+                #     window.blit(image_lost, (0,0))
+                #     pygame.display.flip()
 
 main()
 

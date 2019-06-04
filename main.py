@@ -1,6 +1,6 @@
 # -*- coding: Utf-8 -*
 """
-game mc_gyver_rescue
+game mc_gyver_score_rescue
 escape game with 3 objects for win.
 
 Script Python
@@ -41,21 +41,21 @@ def display_new_position(background, level, character):
 def end_game(character):
     win = 1
     lost = 0
-    start_ticks = pygame.time.get_ticks() #starter tick
+    # start_ticks = pygame.time.get_ticks() #starter tick
 
     if character == 3:
         print("you win !")
-        seconds = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
+        # seconds = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
         # print(seconds) #print how many seconds
         image_win = pygame.image.load(WIN).convert_alpha()
-        window.blit(image_lost, (0,0))
+        window.blit(image_win, (0,0))
 
         # if seconds == 10:
         result = win
 
     else:
         print("game over !")
-        seconds = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
+        # seconds = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
         # print(seconds) #print how many seconds
         image_lost = pygame.image.load(LOST).convert_alpha()
         window.blit(image_lost, (0,0))
@@ -89,6 +89,7 @@ def init_level(choice):
 
 def main():
     carry_on = 1
+    mc_gyver_score = None
 
     #MAIN LOOP
     while carry_on:
@@ -101,12 +102,12 @@ def main():
         # we remake variables to 1 for each looping
         carry_on_game = 1
         carry_on_home = 1
-
+        
         #MENU LOOP
         while carry_on_home:
             #Limit of loop speed
             pygame.time.Clock().tick(30)
-
+        
             for event in pygame.event.get():
             
                 #If user leave, we make variables to loop
@@ -121,14 +122,14 @@ def main():
                 elif event.type == KEYDOWN:				
                     #Launch choice 1
                     if event.key == K_F1:
-                        carry_on_home = 0	#Leave home
-                        choice = 'l1'		#We init the choice to Launch
-                        mc_gyver = 3
+                        carry_on_home = 0	# Leave home
+                        choice = 'l1'		# Map choice
+                        mc_gyver_score = 3
                     # launch to choice 2
                     elif event.key == K_F2:
                         carry_on_home = 0
                         choice = 'l2'
-                        mc_gyver = 0
+                        mc_gyver_score = 0
             
             
         #Verification than user have make a choice for don't load if he leaves
@@ -173,17 +174,22 @@ def main():
             
             display_new_position(background, level, mc)
 
-            # mc_gyver = 2
-            if level.structure[mc.case_y][mc.case_x] == 'e': #and mc_gyver == 3
-                end_game(mc_gyver)
+            if level.structure[mc.case_y][mc.case_x] == 'e': # leave the game
+                
+                #verify if it s a comeback at home from a game
+                while mc_gyver_score in [0, 1, 2, 3]:
+                    end_game(mc_gyver_score)
 
-                # if event.key:
-                #     carry_on_game = end_game(mc_gyver)
-                # end_game(mc_gyver)
-                # if end_game(mc_gyver) == 0:
-                #     image_lost = pygame.image.load(LOST).convert_alpha()
-                #     window.blit(image_lost, (0,0))
-                #     pygame.display.flip()
+                    for event in pygame.event.get():
+                        
+                        if event.type == KEYDOWN:
+                            carry_on_game = 0 #comeback in home loop
+                            mc_gyver_score = None
+                
+
+
+
+
 
 main()
 

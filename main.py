@@ -185,10 +185,6 @@ def main():
                         if event.type == KEYDOWN:
                             carry_on_game = 0 #comeback in home loop
                             mc_gyver_score = None
-                
-
-
-
 
 
 main()

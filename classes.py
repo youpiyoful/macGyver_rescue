@@ -41,7 +41,9 @@ class Level:
 		wall = pygame.image.load(WALL_IMAGE).convert()
 		start = pygame.image.load(START_IMAGE).convert()
 		end = pygame.image.load(ARRIVAL_IMAGE).convert_alpha()
-
+		tube = pygame.image.load(TUBE).convert_alpha()
+		needle = pygame.image.load(NEEDLE).convert_alpha()
+		ether = pygame.image.load(ETHER).convert_alpha()
 		
 		#we run the level's list
 		num_line = 0
@@ -58,6 +60,8 @@ class Level:
 					window.blit(start, (x,y))
 				elif sprite == 'e':		   #e = end
 					window.blit(end, (x,y))
+				# elif sprite == 0:
+				# 	window.blit()
 				num_case += 1
 			num_line += 1
 			
@@ -89,12 +93,12 @@ class Level:
 			
 class Character:
 	"""Class for create character"""
-	def __init__(self, character, level):
+	def __init__(self, image_character, level):
 		#Sprites of character
-		self.right = pygame.image.load(character).convert_alpha()
-		self.left = pygame.image.load(character).convert_alpha()
-		self.up = pygame.image.load(character).convert_alpha()
-		self.down = pygame.image.load(character).convert_alpha()
+		self.right = pygame.image.load(image_character).convert_alpha()
+		self.left = pygame.image.load(image_character).convert_alpha()
+		self.up = pygame.image.load(image_character).convert_alpha()
+		self.down = pygame.image.load(image_character).convert_alpha()
 		#Position of character in cases and in pixels
 		self.case_x = 0
 		self.case_y = 0
@@ -189,3 +193,24 @@ class Character:
     #     c_obj = pygame.image.load("images/" + self.obj + ".png").convert_alpha()
     #     # Display the item on screen
     #     Window.blit(c_obj, (self.x, self.y))
+
+	"""
+
+	on a trois images représentant des objets de quête en entrées et en sortie on veut les afficher aléatoirement sur la map
+	
+	On doit effectuer les mêmes actions sur chacun des trois objets
+
+	1. Récupérer l'image de l'objet
+	2. Trouver une position aléatoirement sur la map
+		a. Lancer une fonction qui génère aléatoirement un nombre entre x et y
+		b. Déclarer des variables cases et des variable pixels
+	3. Vérifier que la position n'est pas occuper par un mur représenté par un w sinon recommencer l'étape 2
+	3. Afficher l'image de l'objet sur la position trouver aléatoirement
+	4. Modifier la case vide représenté par un 0 par une case objet représenté par soit par un E (ether), un N (needle), ou un T (tube)
+	5. Si le personnage arrive sur une case O :
+		a. Ajouter +1 à la variable compteur mac_gyver_score
+		b. Déplacer l'image de l'objet dans la case prévu à cet effet
+		c. Effacer l'image de sa case initial et remmettre la valeur de la case à 0
+
+	"""
+

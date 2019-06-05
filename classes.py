@@ -60,8 +60,12 @@ class Level:
 					window.blit(start, (x,y))
 				elif sprite == 'e':		   #e = end
 					window.blit(end, (x,y))
-				# elif sprite == 0:
-				# 	window.blit()
+				elif sprite == 'E':
+					window.blit(ether, (x, y))
+				elif sprite == 'N':
+					window.blit(needle, (x, y))
+				elif sprite == 'T':
+					window.blit(tube, (x, y))
 				num_case += 1
 			num_line += 1
 			
@@ -204,13 +208,16 @@ class Character:
 	2. Trouver une position aléatoirement sur la map
 		a. Lancer une fonction qui génère aléatoirement un nombre entre x et y
 		b. Déclarer des variables cases et des variable pixels
-	3. Vérifier que la position n'est pas occuper par un mur représenté par un w sinon recommencer l'étape 2
+	3. Vérifier que la position n'est pas occuper par un mur représenté par un w sinon recommencer l'étape 2 (ou plutôt vérifier que la case est bien vide et donc représenté par un 0)
 	3. Afficher l'image de l'objet sur la position trouver aléatoirement
 	4. Modifier la case vide représenté par un 0 par une case objet représenté par soit par un E (ether), un N (needle), ou un T (tube)
 	5. Si le personnage arrive sur une case O :
 		a. Ajouter +1 à la variable compteur mac_gyver_score
 		b. Déplacer l'image de l'objet dans la case prévu à cet effet
 		c. Effacer l'image de sa case initial et remmettre la valeur de la case à 0
+----------------------------------------------------------------------------------------------------------------------
 
+Plutôt que de lier le fait d'afficher l'image et de modifier la valeur 0 on peut d'abord commencer par modifier aléatoirement les valeurs 0 par celle d'un object (E, N et T)
+et ensuite placer l'image si la valeur T N ou E existe.
 	"""
 

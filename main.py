@@ -89,7 +89,7 @@ def init_level(choice):
 
 def main():
     carry_on = 1
-    mc_gyver_score = None
+    mc_gyver_score = None #TODO : vérifier si encore utile
 
     #MAIN LOOP
     while carry_on:

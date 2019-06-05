@@ -11,9 +11,9 @@ WINDOW_TITLE = "MC GYVER"
 ICONE_IMAGE = "images/macgyver.png"
 
 #List images of game
-ETHER = "images/ether.jpg"
-TUBE = "images/tube.jpg"
-NEEDLE = "images/tube.jpg"
+ETHER = "images/ether.png"
+TUBE = "images/tube.png"
+NEEDLE = "images/needle.png"
 HOME_IMAGE = "images/home.jpg"
 BACKGROUND_IMAGE = "images/background.jpg"
 WALL_IMAGE = "images/wall.png"

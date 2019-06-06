@@ -87,9 +87,37 @@ def init_level(choice):
     level.display(window)
     return level
 
+def score_meter(position, score, quest_item_list):
+
+    if position == 'N' and 'N' not in quest_item_list:
+        score +=1
+    
+    elif position == 'T' and 'T' not in quest_item_list:
+        score +=1
+
+    elif position == 'E' and 'E' not in quest_item_list:
+        score +=1
+
+    return score
+
+def stock_quest_item(position, score, quest_item_list):
+
+    if position == 'N' and 'N' not in quest_item_list:
+        quest_item_list.append('N')
+
+    elif position == 'T' and 'T' not in quest_item_list:
+        quest_item_list.append('T')
+
+    elif position == 'E' and 'E' not in quest_item_list:
+        quest_item_list.append('E')
+    
+    return quest_item_list
+
 def main():
-    carry_on = 1
-    mc_gyver_score = None #TODO : vérifier si encore utile
+    carry_on = 1 # Start the loop
+    mc_gyver_score = None # Init the variable score
+    quest_item_list = [] # Create list for stock quest item
+    
 
     #MAIN LOOP
     while carry_on:
@@ -173,11 +201,15 @@ def main():
                         mc.moove('down')			
             
             display_new_position(background, level, mc)
+            
+            quest_item_list = stock_quest_item(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
+            mc_gyver_score = score_meter(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
 
             if level.structure[mc.case_y][mc.case_x] == 'e': # leave the game
                 
                 #verify if it s a comeback at home from a game
-                while mc_gyver_score in [0, 1, 2, 3]:
+                while mc_gyver_score != None:
+                    print(mc_gyver_score)
                     end_game(mc_gyver_score)
 
                     for event in pygame.event.get():

@@ -33,10 +33,10 @@ def loading_home_page(image):
 
 def display_new_position(background, level, character):
         #Displays at new positions
-        window.blit(background, (0,0))
-        level.display(window)
-        window.blit(character.direction, (character.x, character.y))
-        pygame.display.flip()
+        window.blit(background, (0,0)) # Reload background with good position
+        level.display(window) # Reload the element of the map at the good position
+        window.blit(character.direction, (character.x, character.y)) # Reload character at the good position in the map
+        pygame.display.flip() # Update the "surface"
 
 def end_game(character):
     win = 1
@@ -88,7 +88,6 @@ def init_level(choice):
     return level
 
 def score_meter(position, score, quest_item_list):
-
     if position == 'N' and 'N' not in quest_item_list:
         score +=1
     
@@ -113,15 +112,16 @@ def stock_quest_item(position, score, quest_item_list):
     
     return quest_item_list
 
+
 def main():
     carry_on = 1 # Start the loop
-    mc_gyver_score = None # Init the variable score
-    quest_item_list = [] # Create list for stock quest item
+
     
 
     #MAIN LOOP
     while carry_on:
-
+        mc_gyver_score = 0 # Init the variable score
+        quest_item_list = [] # Create list for stock quest item
         loading_home_page(HOME_IMAGE)
 
         #refresh
@@ -152,12 +152,12 @@ def main():
                     if event.key == K_F1:
                         carry_on_home = 0	# Leave home
                         choice = 'l1'		# Map choice
-                        mc_gyver_score = 3
+                        
                     # launch to choice 2
                     elif event.key == K_F2:
                         carry_on_home = 0
                         choice = 'l2'
-                        mc_gyver_score = 0
+                        
             
             
         #Verification than user have make a choice for don't load if he leaves
@@ -202,13 +202,16 @@ def main():
             
             display_new_position(background, level, mc)
             
-            quest_item_list = stock_quest_item(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
             mc_gyver_score = score_meter(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
+            quest_item_list = stock_quest_item(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
 
             if level.structure[mc.case_y][mc.case_x] == 'e': # leave the game
-                
+
+                for item in quest_item_list:
+                    print(item)
+
                 #verify if it s a comeback at home from a game
-                while mc_gyver_score != None:
+                while mc_gyver_score in [0, 1, 2, 3]:
                     print(mc_gyver_score)
                     end_game(mc_gyver_score)
 

@@ -116,8 +116,6 @@ def stock_quest_item(position, score, quest_item_list):
 def main():
     carry_on = 1 # Start the loop
 
-    
-
     #MAIN LOOP
     while carry_on:
         mc_gyver_score = 0 # Init the variable score
@@ -204,7 +202,8 @@ def main():
             
             mc_gyver_score = score_meter(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
             quest_item_list = stock_quest_item(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
-
+            # replace_letter(choice, level.structure[mc.case_y][mc.case_x])
+            print(level.structure)
             if level.structure[mc.case_y][mc.case_x] == 'e': # leave the game
 
                 for item in quest_item_list:
@@ -221,7 +220,29 @@ def main():
                             carry_on_game = 0 #comeback in home loop
                             mc_gyver_score = None
 
+# def replace_letter(choice):
+#     file = open(choice)
+#     data = file.read()
+#     print(data)
+#     file.close
 
+# def replace_letter(structure):
+#   """ objectif  """
+#     with open(choice, "w") as file:
+#         data = file.read()
+        
+#         if position == 'E':
+
+#             for letter in data:
+
+#                 if letter == 'E':
+#                     print("=================================== je suis égale a E ===============")
+#                     letter.replace('E', '0')
+#                     file.write('')
+#         print(data)
+
+
+# replace_letter("l1")
 main()
 
 

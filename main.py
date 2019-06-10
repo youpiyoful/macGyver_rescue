@@ -202,8 +202,8 @@ def main():
             
             mc_gyver_score = score_meter(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
             quest_item_list = stock_quest_item(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
-            # replace_letter(choice, level.structure[mc.case_y][mc.case_x])
-            print(level.structure)
+            level.structure[mc.case_y][mc.case_x] = delete_object(level.structure[mc.case_y][mc.case_x])
+            # print(level.structure)
             if level.structure[mc.case_y][mc.case_x] == 'e': # leave the game
 
                 for item in quest_item_list:
@@ -227,20 +227,33 @@ def main():
 #     file.close
 
 # def replace_letter(structure):
-#   """ objectif  """
-#     with open(choice, "w") as file:
-#         data = file.read()
+#     """ Change list of structure and not directly the file map """
+#     l = 0
+#     c = 0
+#     for line in structure:
         
-#         if position == 'E':
+#         for case in line:
+            
+#             if case == 'E':
+#                 structure[l][c] = '0'            
+#             c += 1
+#         l += 1
+#     print(structure)
 
-#             for letter in data:
+def delete_object(position):
+    if position == 'E' or position == 'N' or position == 'T':
+        position = '0'
+    return position
 
-#                 if letter == 'E':
-#                     print("=================================== je suis égale a E ===============")
-#                     letter.replace('E', '0')
-#                     file.write('')
-#         print(data)
+# def replace_letter(structure):
+#     """ Change list of structure and not directly the file map """
+#     # for line in structure:
+#     #     case = [case.replace('E', '0') for case in line]
+#     #     print(line)
+#     # print(structure)
 
+#     for line in structure:
+#         line = [case for case in line]
 
 # replace_letter("l1")
 main()

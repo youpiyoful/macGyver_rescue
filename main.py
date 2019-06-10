@@ -199,12 +199,12 @@ def main():
                         mc.moove('down')			
             
             display_new_position(background, level, mc)
-            
-            mc_gyver_score = score_meter(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
-            quest_item_list = stock_quest_item(level.structure[mc.case_y][mc.case_x], mc_gyver_score, quest_item_list)
-            level.structure[mc.case_y][mc.case_x] = delete_object(level.structure[mc.case_y][mc.case_x])
+            position = level.structure[mc.case_y][mc.case_x]
+            mc_gyver_score = score_meter(position, mc_gyver_score, quest_item_list)
+            quest_item_list = stock_quest_item(position, mc_gyver_score, quest_item_list)
+            transform_object_in_empty_case(position)
             # print(level.structure)
-            if level.structure[mc.case_y][mc.case_x] == 'e': # leave the game
+            if position == 'e': # leave the game
 
                 for item in quest_item_list:
                     print(item)
@@ -240,7 +240,7 @@ def main():
 #         l += 1
 #     print(structure)
 
-def delete_object(position):
+def transform_object_in_empty_case(position):
     if position == 'E' or position == 'N' or position == 'T':
         position = '0'
     return position

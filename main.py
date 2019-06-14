@@ -41,49 +41,31 @@ def display_new_position(background, level, character):
 def end_game(character):
     win = 1
     lost = 0
-    # start_ticks = pygame.time.get_ticks() #starter tick
 
     if character == 3:
         print("you win !")
-        # seconds = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
-        # print(seconds) #print how many seconds
         image_win = pygame.image.load(WIN).convert_alpha()
         window.blit(image_win, (0,0))
-
-        # if seconds == 10:
         result = win
 
     else:
         print("game over !")
-        # seconds = (pygame.time.get_ticks() - start_ticks) / 1000 #calculate how many seconds
-        # print(seconds) #print how many seconds
         image_lost = pygame.image.load(LOST).convert_alpha()
         window.blit(image_lost, (0,0))
-        
-        # if seconds > 10:
         result = lost
             
     pygame.display.flip()
     return result
 
 def initialize_background():
-    #Loading background
-    background = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()
+    background = pygame.image.load(BACKGROUND_IMAGE).convert_alpha() #Loading background
     return background
-
-def insert_object_randomly():
-    """ Generate object randomly on the map """
-    ether = Object(ETHER, level, "E")
-    ether.display()
-    needle = Object(NEEDLE, level, "N")
-    needle.display()
-    tube = Object(TUBE, level, "T")
-    tube.display()
 
 def init_level(choice):
     #Generate a choice from a FILE
     level = Level(choice)
     level.generate()
+    level.random_obj()
     level.display(window)
     return level
 
@@ -98,6 +80,15 @@ def score_meter(position, score, quest_item_list):
         score +=1
 
     return score
+
+def insert_object_randomly():
+    """ Generate object randomly on the map """
+    ether = Object(ETHER, level, "E")
+    ether.display()
+    needle = Object(NEEDLE, level, "N")
+    needle.display()
+    tube = Object(TUBE, level, "T")
+    tube.display()
 
 def stock_quest_item(position, score, quest_item_list):
 
@@ -136,14 +127,12 @@ def main():
         
             for event in pygame.event.get():
             
-                #If user leave, we make variables to loop
-                #at 0 for don't launch anything and exit
+                # If user leave, we make variables to loop at 0 for don't launch anything and exit
                 if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
                     carry_on_home = 0
                     carry_on_game = 0
                     carry_on = 0
-                    #Variable for choice level
-                    choice = 0
+                    choice = 0 # Variable for choice level
                     
                 elif event.type == KEYDOWN:				
                     #Launch choice 1
@@ -158,13 +147,13 @@ def main():
                         
             
             
-        #Verification than user have make a choice for don't load if he leaves
+        # Verification than user have make a choice for don't load if he leaves
         if choice != 0:
             level = init_level(choice)
             background = initialize_background()
             # insert_object_randomly()
-            #Creation of mc Gyver
-            mc = Character(IMAGE_CHARACTER, level)
+            mc = Character(IMAGE_CHARACTER, level) # Creation of mc Gyver
+
                     
         #GAME LOOP
         while carry_on_game:
@@ -173,19 +162,18 @@ def main():
         
             for event in pygame.event.get():
             
-                #if user leave, we make the variable who continue the game quand
-                #the variable general at 0 for close the window
+                # If user leave, we make the variable who continue the game quand the variable general at 0 for close the window
                 if event.type == QUIT:
                     carry_on_game = 0
                     carry_on = 0
             
                 elif event.type == KEYDOWN:
 
-                    #if user push escape here, we comeback only at home
+                    # If user push escape here, we comeback only at home
                     if event.key == K_ESCAPE:
                         carry_on_game = 0
                         
-                    #Keyboard of moove to mc_gyver
+                    # Keyboard of moove to mc_gyver
                     elif event.key == K_RIGHT:
                         mc.moove('right')
 
@@ -199,21 +187,32 @@ def main():
                         mc.moove('down')			
             
             display_new_position(background, level, mc)
+            
+            # Store position in a variable named position
             position = level.structure[mc.case_y][mc.case_x]
-            mc_gyver_score = score_meter(position, mc_gyver_score, quest_item_list)
-            quest_item_list = stock_quest_item(position, mc_gyver_score, quest_item_list)
-            transform_object_in_empty_case(position)
-            # print(level.structure)
-            if position == 'e': # leave the game
 
+            # Calcul the score and store it in a variable
+            mc_gyver_score = score_meter(position, mc_gyver_score, quest_item_list)
+
+            # Insert the object into a list
+            quest_item_list = stock_quest_item(position, mc_gyver_score, quest_item_list)
+
+            # delete the object pick up by mc_gyer of the map
+            level.structure[mc.case_y][mc.case_x] = transform_object_in_empty_case(position)
+
+            # verify if mc_gyver is on the end case
+            if level.structure[mc.case_y][mc.case_x] == 'e': # leave the game
+
+                #displays possessed objects
                 for item in quest_item_list:
                     print(item)
 
-                #verify if it s a comeback at home from a game
-                while mc_gyver_score in [0, 1, 2, 3]:
+                # displays result message 
+                while mc_gyver_score in [0, 1, 2, 3]: # Allow to verify than mc_gyver is not None
                     print(mc_gyver_score)
                     end_game(mc_gyver_score)
-
+                    
+                    # allows you to leave the result image of the game
                     for event in pygame.event.get():
                         
                         if event.type == KEYDOWN:

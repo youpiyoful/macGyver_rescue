@@ -3,7 +3,8 @@
 
 import pygame
 from pygame.locals import *
-from random import *
+# from random import *
+import random
 
 from constantes import *
 
@@ -34,6 +35,22 @@ class Level:
 			#we save structure 
 			self.structure = structure_level
 	
+	def random_obj(self):
+		objects = ['E', 'T', 'N']
+		for obj in objects:
+			x = 0
+			y = 0
+			self.structure[x][y] == None
+			while self.structure[x][y] != '0':
+				line = random.randint(0, 14)
+				case = random.randint(0, 14)
+				x = line
+				y = case
+			self.structure[x][y] = obj
+
+			
+
+
 	
 	def display(self, window):
 		"""Méthod for display level by list of structure output by generate()"""

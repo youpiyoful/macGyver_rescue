@@ -36,11 +36,11 @@ class Level:
 			self.structure = structure_level
 	
 	def random_obj(self):
-		objects = ['E', 'T', 'N']
-		for obj in objects:
-			x = 0
-			y = 0
-			self.structure[x][y] == None
+		objects = ['E', 'T', 'N'] # init list of objects
+		for obj in objects: # instruction for each object
+			x = 0 # init value 
+			y = 0 # init value
+			self.structure[x][y] == None # init != 0 for allow to enter in loop
 			while self.structure[x][y] != '0':
 				line = random.randint(0, 14)
 				case = random.randint(0, 14)

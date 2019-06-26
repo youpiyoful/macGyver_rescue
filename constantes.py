@@ -1,16 +1,16 @@
 # -*- coding: Utf-8 -*
 """Constants of escape game mac gyver'"""
 
-#Params of window
+# Params of window
 NUMBER_SIDE_SPRITE = 15
 SPRITE_SIZE = 30
 WINDOW_SIDE = NUMBER_SIDE_SPRITE * SPRITE_SIZE
 
-#Personnalisation of window
+# Personnalisation of window
 WINDOW_TITLE = "MC GYVER"
 ICONE_IMAGE = "images/macgyver.png"
 
-#List images of game
+# List images of game
 ETHER = "images/ether.png"
 TUBE = "images/tube.png"
 NEEDLE = "images/needle.png"

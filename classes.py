@@ -1,10 +1,7 @@
 # -*- coding: Utf-8 -*
 """Classes of game Mc-gyver"""
-
-import pygame
-from pygame.locals import *
-# from random import *
 import random
+import pygame
 
 from constantes import *
 

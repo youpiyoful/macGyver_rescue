@@ -17,26 +17,27 @@ from constantes import *
 
 # def initialize():
 pygame.init()
-#Open window Pygame
+# Open window Pygame
 window = pygame.display.set_mode((WINDOW_SIDE, WINDOW_SIDE))
-#Icone
+# Icone
 icone = pygame.image.load(ICONE_IMAGE)
 pygame.display.set_icon(icone)
-#Title
+# Title
 pygame.display.set_caption(WINDOW_TITLE)
-
 
 
 def loading_home_page(image):
     home = pygame.image.load(image).convert()
     window.blit(home, (0,0))
 
+
 def display_new_position(background, level, character):
-        #Displays at new positions
-        window.blit(background, (0,0)) # Reload background with good position
-        level.display(window) # Reload the element of the map at the good position
-        window.blit(character.direction, (character.x, character.y)) # Reload character at the good position in the map
-        pygame.display.flip() # Update the "surface"
+    # Displays at new positions
+    window.blit(background, (0,0))  # Reload background with good position
+    level.display(window)  # Reload the element of the map at the good position
+    window.blit(character.direction, (character.x, character.y)) # Reload character at the good position in the map
+    pygame.display.flip()  # Update the "surface"
+
 
 def end_game(character):
     win = 1
@@ -57,40 +58,41 @@ def end_game(character):
     pygame.display.flip()
     return result
 
+
 def initialize_background():
-    background = pygame.image.load(BACKGROUND_IMAGE).convert_alpha() #Loading background
+    background = pygame.image.load(BACKGROUND_IMAGE).convert_alpha()  # Loading background
     return background
 
+
 def init_level(choice):
-    #Generate a choice from a FILE
+    # Generate a choice from a FILE
     level = Level(choice)
     level.generate()
     level.random_obj()
     level.display(window)
     return level
 
+
 def score_meter(position, score, quest_item_list):
     if position == 'N' and 'N' not in quest_item_list:
-        score +=1
+        score += 1
     
     elif position == 'T' and 'T' not in quest_item_list:
-        score +=1
+        score += 1
 
     elif position == 'E' and 'E' not in quest_item_list:
-        score +=1
+        score += 1
 
     return score
 
-def insert_object_randomly():
-    """ Generate object randomly on the map """
-    ether = Object(ETHER, level, "E")
-    ether.display()
-    needle = Object(NEEDLE, level, "N")
-    needle.display()
-    tube = Object(TUBE, level, "T")
-    tube.display()
 
-def stock_quest_item(position, score, quest_item_list):
+def transform_object_in_empty_case(position):
+    if position == 'E' or position == 'N' or position == 'T':
+        position = '0'
+    return position
+
+
+def stock_quest_item(position, quest_item_list):
 
     if position == 'N' and 'N' not in quest_item_list:
         quest_item_list.append('N')
@@ -105,24 +107,24 @@ def stock_quest_item(position, score, quest_item_list):
 
 
 def main():
-    carry_on = 1 # Start the loop
+    carry_on = 1  # Start the loop
 
-    #MAIN LOOP
+    # MAIN LOOP
     while carry_on:
-        mc_gyver_score = 0 # Init the variable score
-        quest_item_list = [] # Create list for stock quest item
+        mc_gyver_score = 0  # Init the variable score
+        quest_item_list = []  # Create list for stock quest item
         loading_home_page(HOME_IMAGE)
 
-        #refresh
+        # refresh
         pygame.display.flip()
 
         # we remake variables to 1 for each looping
         carry_on_game = 1
         carry_on_home = 1
         
-        #MENU LOOP
+        # MENU LOOP
         while carry_on_home:
-            #Limit of loop speed
+            # Limit of loop speed
             pygame.time.Clock().tick(30)
         
             for event in pygame.event.get():
@@ -132,37 +134,33 @@ def main():
                     carry_on_home = 0
                     carry_on_game = 0
                     carry_on = 0
-                    choice = 0 # Variable for choice level
+                    choice = 0  # Variable for choice level
                     
                 elif event.type == KEYDOWN:				
-                    #Launch choice 1
+                    # Launch choice 1
                     if event.key == K_F1:
-                        carry_on_home = 0	# Leave home
-                        choice = 'l1'		# Map choice
+                        carry_on_home = 0  # Leave home
+                        choice = 'l1'  # Map choice
                         
                     # launch to choice 2
                     elif event.key == K_F2:
                         carry_on_home = 0
                         choice = 'l2'
-                        
-            
-            
+
         # Verification than user have make a choice for don't load if he leaves
         if choice != 0:
             level = init_level(choice)
             background = initialize_background()
-            # insert_object_randomly()
-            mc = Character(IMAGE_CHARACTER, level) # Creation of mc Gyver
-
+            mc = Character(IMAGE_CHARACTER, level)  # Creation of mc Gyver
                     
-        #GAME LOOP
+        # GAME LOOP
         while carry_on_game:
-            #Limit speed looping
+            # Limit speed looping
             pygame.time.Clock().tick(30)
         
             for event in pygame.event.get():
             
-                # If user leave, we make the variable who continue the game quand the variable general at 0 for close the window
+                # If user leave, variable who continue the game = 0 for close the window
                 if event.type == QUIT:
                     carry_on_game = 0
                     carry_on = 0
@@ -195,20 +193,20 @@ def main():
             mc_gyver_score = score_meter(position, mc_gyver_score, quest_item_list)
 
             # Insert the object into a list
-            quest_item_list = stock_quest_item(position, mc_gyver_score, quest_item_list)
+            quest_item_list = stock_quest_item(position, quest_item_list)
 
             # delete the object pick up by mc_gyer of the map
             level.structure[mc.case_y][mc.case_x] = transform_object_in_empty_case(position)
 
             # verify if mc_gyver is on the end case
-            if level.structure[mc.case_y][mc.case_x] == 'e': # leave the game
+            if level.structure[mc.case_y][mc.case_x] == 'e':  # leave the game
 
-                #displays possessed objects
+                # displays possessed objects
                 for item in quest_item_list:
                     print(item)
 
                 # displays result message 
-                while mc_gyver_score in [0, 1, 2, 3]: # Allow to verify than mc_gyver is not None
+                while mc_gyver_score in [0, 1, 2, 3]:  # Allow to verify than mc_gyver is not None
                     print(mc_gyver_score)
                     end_game(mc_gyver_score)
                     
@@ -216,54 +214,8 @@ def main():
                     for event in pygame.event.get():
                         
                         if event.type == KEYDOWN:
-                            carry_on_game = 0 #comeback in home loop
+                            carry_on_game = 0  # comeback in home loop
                             mc_gyver_score = None
 
-# def replace_letter(choice):
-#     file = open(choice)
-#     data = file.read()
-#     print(data)
-#     file.close
 
-# def replace_letter(structure):
-#     """ Change list of structure and not directly the file map """
-#     l = 0
-#     c = 0
-#     for line in structure:
-        
-#         for case in line:
-            
-#             if case == 'E':
-#                 structure[l][c] = '0'            
-#             c += 1
-#         l += 1
-#     print(structure)
-
-def transform_object_in_empty_case(position):
-    if position == 'E' or position == 'N' or position == 'T':
-        position = '0'
-    return position
-
-# def replace_letter(structure):
-#     """ Change list of structure and not directly the file map """
-#     # for line in structure:
-#     #     case = [case.replace('E', '0') for case in line]
-#     #     print(line)
-#     # print(structure)
-
-#     for line in structure:
-#         line = [case for case in line]
-
-# replace_letter("l1")
 main()
-
-
-############### # IDEA:
-# mc_giver = 0
-# endsprite = 3
-# if sprite == object:
-#     mc_giver += 1
-# if mc_giver == endsprite: donc 3
-#     game = win !
-# else:
-#     game = lost !

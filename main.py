@@ -7,31 +7,30 @@ Script Python
 Files : main.py, classes.py, constantes.py, l1, l2 + images
 """
 
-import pygame
-
 from pygame.locals import *
-from random import *
 
 from classes import *
 from constantes import *
 
-# def initialize():
-pygame.init()
-# Open window Pygame
-window = pygame.display.set_mode((WINDOW_SIDE, WINDOW_SIDE))
-# Icone
-icone = pygame.image.load(ICONE_IMAGE)
-pygame.display.set_icon(icone)
-# Title
-pygame.display.set_caption(WINDOW_TITLE)
+
+def initialize():
+    pygame.init()
+    # Open window Pygame
+    window = pygame.display.set_mode((WINDOW_SIDE, WINDOW_SIDE))
+    # Icone
+    icone = pygame.image.load(ICONE_IMAGE)
+    pygame.display.set_icon(icone)
+    # Title
+    pygame.display.set_caption(WINDOW_TITLE)
+    return window
 
 
-def loading_home_page(image):
+def loading_home_page(image, window):
     home = pygame.image.load(image).convert()
     window.blit(home, (0,0))
 
 
-def display_new_position(background, level, character):
+def display_new_position(background, level, character, window):
     # Displays at new positions
     window.blit(background, (0,0))  # Reload background with good position
     level.display(window)  # Reload the element of the map at the good position
@@ -39,7 +38,7 @@ def display_new_position(background, level, character):
     pygame.display.flip()  # Update the "surface"
 
 
-def end_game(character):
+def end_game(character, window):
     win = 1
     lost = 0
 
@@ -64,7 +63,7 @@ def initialize_background():
     return background
 
 
-def init_level(choice):
+def init_level(choice, window):
     # Generate a choice from a FILE
     level = Level(choice)
     level.generate()
@@ -107,13 +106,14 @@ def stock_quest_item(position, quest_item_list):
 
 
 def main():
+    window = initialize()
     carry_on = 1  # Start the loop
 
     # MAIN LOOP
     while carry_on:
         mc_gyver_score = 0  # Init the variable score
         quest_item_list = []  # Create list for stock quest item
-        loading_home_page(HOME_IMAGE)
+        loading_home_page(HOME_IMAGE, window)
 
         # refresh
         pygame.display.flip()
@@ -149,7 +149,7 @@ def main():
 
         # Verification than user have make a choice for don't load if he leaves
         if choice != 0:
-            level = init_level(choice)
+            level = init_level(choice, window)
             background = initialize_background()
             mc = Character(IMAGE_CHARACTER, level)  # Creation of mc Gyver
                     
@@ -184,16 +184,10 @@ def main():
                     elif event.key == K_DOWN:
                         mc.moove('down')			
             
-            display_new_position(background, level, mc)
-            
-            # Store position in a variable named position
-            position = level.structure[mc.case_y][mc.case_x]
-
-            # Calcul the score and store it in a variable
-            mc_gyver_score = score_meter(position, mc_gyver_score, quest_item_list)
-
-            # Insert the object into a list
-            quest_item_list = stock_quest_item(position, quest_item_list)
+            display_new_position(background, level, mc, window)
+            position = level.structure[mc.case_y][mc.case_x]  # Store position in a variable named position
+            mc_gyver_score = score_meter(position, mc_gyver_score, quest_item_list)  # calcul and return score
+            quest_item_list = stock_quest_item(position, quest_item_list)  # Insert the object into a list
 
             # delete the object pick up by mc_gyer of the map
             level.structure[mc.case_y][mc.case_x] = transform_object_in_empty_case(position)
@@ -208,7 +202,7 @@ def main():
                 # displays result message 
                 while mc_gyver_score in [0, 1, 2, 3]:  # Allow to verify than mc_gyver is not None
                     print(mc_gyver_score)
-                    end_game(mc_gyver_score)
+                    end_game(mc_gyver_score, window)
                     
                     # allows you to leave the result image of the game
                     for event in pygame.event.get():

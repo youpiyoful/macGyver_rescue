@@ -13,7 +13,7 @@ from classes import *
 from constantes import *
 
 
-def initialize():
+def initialize_window():
     pygame.init()
     # Open window Pygame
     window = pygame.display.set_mode((WINDOW_SIDE, WINDOW_SIDE))
@@ -106,7 +106,7 @@ def stock_quest_item(position, quest_item_list):
 
 
 def main():
-    window = initialize()
+    window = initialize_window()
     carry_on = 1  # Start the loop
 
     # MAIN LOOP

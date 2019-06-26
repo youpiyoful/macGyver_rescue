@@ -8,31 +8,31 @@ import random
 
 from constantes import *
 
+
 class Level:
 	"""Class for create level"""
 	def __init__(self, file):
 		self.file = file
 		self.structure = 0
-	
-	
+
 	def generate(self):
 		"""Method for generate level by file.
 		We create a general list, who contain a list by line to display"""
-		#we open file
+		# we open file
 		with open(self.file, "r") as file:
 			structure_level = []
-			#we rune line of file
+			# we rune line of file
 			for line in file:
 				line_level = []
-				#we run sprites (letters) contain in file
+				# we run sprites (letters) contain in file
 				for sprite in line:
-					#we ignore the "\n" of end line
+					# we ignore the "\n" of end line
 					if sprite != '\n':
-						#we add the sprite at line of level
+						# we add the sprite at line of level
 						line_level.append(sprite)
-				#we add the line at structure level
+				# we add the line at structure level
 				structure_level.append(line_level)
-			#we save structure 
+			# we save structure
 			self.structure = structure_level
 	
 	def random_obj(self):
@@ -40,16 +40,13 @@ class Level:
 		for obj in objects: # instruction for each object
 			x = 0 # init value 
 			y = 0 # init value
-			self.structure[x][y] == None # init != 0 for allow to enter in loop
+			self.structure[x][y] = None # init != 0 for allow to enter in loop
 			while self.structure[x][y] != '0':
 				line = random.randint(0, 14)
 				case = random.randint(0, 14)
 				x = line
 				y = case
 			self.structure[x][y] = obj
-
-			
-
 
 	
 	def display(self, window):

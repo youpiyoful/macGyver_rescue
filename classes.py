@@ -3,7 +3,7 @@
 import random
 import pygame
 
-from constantes import *
+from constantes import WALL_IMAGE, START_IMAGE, ARRIVAL_IMAGE, TUBE, NEEDLE, ETHER, SPRITE_SIZE, NUMBER_SIDE_SPRITE
 
 
 class Level:

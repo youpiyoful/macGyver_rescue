@@ -6,12 +6,8 @@ escape game with 3 objects for win.
 Script Python
 Files : main.py, classes.py, constantes.py, l1, l2 + images
 """
-
-# from pygame.locals import *
-
-# from classes import *
-# from constantes import *
 import pygame
+
 from pygame.constants import KEYDOWN, K_ESCAPE, QUIT, K_F1, K_F2, K_RIGHT, K_LEFT, K_UP, K_DOWN
 
 from classes import Level, Character

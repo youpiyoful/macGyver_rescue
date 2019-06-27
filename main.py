@@ -7,10 +7,15 @@ Script Python
 Files : main.py, classes.py, constantes.py, l1, l2 + images
 """
 
-from pygame.locals import *
+# from pygame.locals import *
 
-from classes import *
-from constantes import *
+# from classes import *
+# from constantes import *
+import pygame
+from pygame.constants import KEYDOWN, K_ESCAPE, QUIT, K_F1, K_F2, K_RIGHT, K_LEFT, K_UP, K_DOWN
+
+from classes import Level, Character
+from constantes import HOME_IMAGE, BACKGROUND_IMAGE, LOST, WINDOW_TITLE, WINDOW_SIDE, ICONE_IMAGE, IMAGE_CHARACTER, WIN
 
 
 def initialize_window():
@@ -27,12 +32,12 @@ def initialize_window():
 
 def loading_home_page(image, window):
     home = pygame.image.load(image).convert()
-    window.blit(home, (0,0))
+    window.blit(home, (0, 0))
 
 
 def display_new_position(background, level, character, window):
     # Displays at new positions
-    window.blit(background, (0,0))  # Reload background with good position
+    window.blit(background, (0, 0))  # Reload background with good position
     level.display(window)  # Reload the element of the map at the good position
     window.blit(character.direction, (character.x, character.y)) # Reload character at the good position in the map
     pygame.display.flip()  # Update the "surface"
@@ -45,13 +50,13 @@ def end_game(character, window):
     if character == 3:
         print("you win !")
         image_win = pygame.image.load(WIN).convert_alpha()
-        window.blit(image_win, (0,0))
+        window.blit(image_win, (0, 0))
         result = win
 
     else:
         print("game over !")
         image_lost = pygame.image.load(LOST).convert_alpha()
-        window.blit(image_lost, (0,0))
+        window.blit(image_lost, (0, 0))
         result = lost
             
     pygame.display.flip()
@@ -136,7 +141,7 @@ def main():
                     carry_on = 0
                     choice = 0  # Variable for choice level
                     
-                elif event.type == KEYDOWN:				
+                elif event.type == KEYDOWN:
                     # Launch choice 1
                     if event.key == K_F1:
                         carry_on_home = 0  # Leave home

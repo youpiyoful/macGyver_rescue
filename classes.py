@@ -1,9 +1,16 @@
 # -*- coding: Utf-8 -*
 """Classes of game Mc-gyver"""
-import random
 import pygame
+import random
 
-from constantes import WALL_IMAGE, START_IMAGE, ARRIVAL_IMAGE, TUBE, NEEDLE, ETHER, SPRITE_SIZE, NUMBER_SIDE_SPRITE
+from constantes import ARRIVAL_IMAGE
+from constantes import ETHER
+from constantes import NEEDLE
+from constantes import NUMBER_SIDE_SPRITE
+from constantes import SPRITE_SIZE
+from constantes import START_IMAGE
+from constantes import TUBE
+from constantes import WALL_IMAGE
 
 
 class Level:

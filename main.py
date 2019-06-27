@@ -8,10 +8,26 @@ Files : main.py, classes.py, constantes.py, l1, l2 + images
 """
 import pygame
 
-from pygame.constants import KEYDOWN, K_ESCAPE, QUIT, K_F1, K_F2, K_RIGHT, K_LEFT, K_UP, K_DOWN
+from pygame.constants import KEYDOWN
+from pygame.constants import K_ESCAPE
+from pygame.constants import K_DOWN
+from pygame.constants import K_F1
+from pygame.constants import K_F2
+from pygame.constants import K_LEFT
+from pygame.constants import K_RIGHT
+from pygame.constants import K_UP
+from pygame.constants import QUIT
 
-from classes import Level, Character
-from constantes import HOME_IMAGE, BACKGROUND_IMAGE, LOST, WINDOW_TITLE, WINDOW_SIDE, ICONE_IMAGE, IMAGE_CHARACTER, WIN
+from classes import Character
+from classes import Level
+from constantes import BACKGROUND_IMAGE
+from constantes import HOME_IMAGE
+from constantes import ICONE_IMAGE
+from constantes import IMAGE_CHARACTER
+from constantes import LOST
+from constantes import WIN
+from constantes import WINDOW_TITLE
+from constantes import WINDOW_SIDE
 
 
 def initialize_window():

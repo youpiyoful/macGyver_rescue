@@ -18,8 +18,10 @@ from pygame.constants import K_RIGHT
 from pygame.constants import K_UP
 from pygame.constants import QUIT
 
-from classes import Character
-from classes import Level
+# from classes import Character
+# from classes import Level
+from class_character import Character
+from class_level import Level
 from constantes import BACKGROUND_IMAGE
 from constantes import HOME_IMAGE
 from constantes import ICONE_IMAGE

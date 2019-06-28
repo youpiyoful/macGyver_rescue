@@ -46,8 +46,8 @@ class Level:
 			y = 0  # init value
 			self.structure[x][y] = None  # init != 0 for allow to enter in loop
 			while self.structure[x][y] != '0':
-				line = random.sample(0, 14)
-				case = random.sample(0, 14)
+				line = random.randint(0, 14)
+				case = random.randint(0, 14)
 				x = line  # TODO faire en sorte que les objets n'apparaissent pas au même endroit
 				y = case
 			self.structure[x][y] = obj

@@ -46,14 +46,14 @@ class Level:
 			y = 0  # init value
 			self.structure[x][y] = None  # init != 0 for allow to enter in loop
 			while self.structure[x][y] != '0':
-				line = random.randint(0, 14)
-				case = random.randint(0, 14)
-				x = line
+				line = random.sample(0, 14)
+				case = random.sample(0, 14)
+				x = line  # TODO faire en sorte que les objets n'apparaissent pas au même endroit
 				y = case
 			self.structure[x][y] = obj
 
 	def display(self, window):
-		"""Méthod for display level by list of structure output by generate()"""
+		"""Method for display level by list of structure output by generate()"""
 		# Loading images
 		wall = pygame.image.load(WALL_IMAGE).convert()
 		start = pygame.image.load(START_IMAGE).convert()

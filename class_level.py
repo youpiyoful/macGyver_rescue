@@ -1,8 +1,10 @@
 # -*- coding: Utf-8 -*
 """Classes of game Mc-gyver"""
-import pygame
 import random
+import pygame
 
+from constantes import LOST
+from constantes import WIN
 from constantes import ARRIVAL_IMAGE
 from constantes import ETHER
 from constantes import NEEDLE
@@ -18,6 +20,27 @@ class Level:
     def __init__(self, file):
         self.file = file
         self.structure = 0
+
+    @staticmethod
+    def end_game(character, window):
+        """ verify the score for return win or lose """
+        win = 1
+        lost = 0
+
+        if character == 3:
+            print("you win !")
+            image_win = pygame.image.load(WIN).convert_alpha()
+            window.blit(image_win, (0, 0))
+            result = win
+
+        else:
+            print("game over !")
+            image_lost = pygame.image.load(LOST).convert_alpha()
+            window.blit(image_lost, (0, 0))
+            result = lost
+
+        pygame.display.flip()
+        return result
 
     def generate(self):
         """Method for generate level by file.
@@ -40,17 +63,18 @@ class Level:
             self.structure = structure_level
 
     def random_obj(self):
+        """ generate random object at unique place on the map"""
         objects = ['E', 'T', 'N']  # init list of objects
         for obj in objects:  # instruction for each object
-            x = 0  # init value
-            y = 0  # init value
-            self.structure[x][y] = None  # init != 0 for allow to enter in loop
-            while self.structure[x][y] != '0':
+            x_line = 0  # init value
+            y_case = 0  # init value
+            self.structure[x_line][y_case] = None  # init != 0 for allow to enter in loop
+            while self.structure[x_line][y_case] != '0':
                 line = random.randint(0, 14)
                 case = random.randint(0, 14)
-                x = line  # TODO faire en sorte que les objets n'apparaissent pas au même endroit
-                y = case
-            self.structure[x][y] = obj
+                x_line = line
+                y_case = case
+            self.structure[x_line][y_case] = obj
 
     def display(self, window):
         """Method for display level by list of structure output by generate()"""
@@ -71,25 +95,25 @@ class Level:
 
             for sprite in line:
                 # we calcul the real position in pixels
-                x = num_case * SPRITE_SIZE
-                y = num_line * SPRITE_SIZE
+                x_case = num_case * SPRITE_SIZE
+                y_case = num_line * SPRITE_SIZE
 
                 if sprite == 'w':  # m = wall
-                    window.blit(wall, (x, y))
+                    window.blit(wall, (x_case, y_case))
 
                 elif sprite == 's':  # s = start
-                    window.blit(start, (x, y))
+                    window.blit(start, (x_case, y_case))
 
                 elif sprite == 'e':  # e = end
-                    window.blit(end, (x, y))
+                    window.blit(end, (x_case, y_case))
 
                 elif sprite == 'E':
-                    window.blit(ether, (x, y))
+                    window.blit(ether, (x_case, y_case))
 
                 elif sprite == 'N':
-                    window.blit(needle, (x, y))
+                    window.blit(needle, (x_case, y_case))
 
                 elif sprite == 'T':
-                    window.blit(tube, (x, y))
+                    window.blit(tube, (x_case, y_case))
                 num_case += 1
             num_line += 1

@@ -53,4 +53,3 @@ class Initializer:
         # Reload character at the good position in the map
         window.blit(character.direction, (character.x_pixels, character.y_pixels))
         pygame.display.flip()  # Update the "surface"
-

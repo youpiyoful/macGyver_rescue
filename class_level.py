@@ -42,6 +42,13 @@ class Level:
         pygame.display.flip()
         return result
 
+    @staticmethod
+    def transform_case_object_in_empty_case(position):
+        """ replace sign object by 0 when player position is on object"""
+        if position in ('E', 'N', 'T'):
+            position = '0'
+        return position
+
     def generate(self):
         """Method for generate level by file.
         We create a general list, who contain a list by line to display"""
